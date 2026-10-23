@@ -3430,7 +3430,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "cpal",
  "eframe",
@@ -3455,7 +3455,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-automation"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "image",
  "oracle-motion-engine",
@@ -3467,14 +3467,14 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-av1enc"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "filmcraft-av1",
 ]
 
 [[package]]
 name = "oracle-motion-cli"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "cpu-time",
  "image",
@@ -3490,7 +3490,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-color"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "proptest",
  "serde",
@@ -3498,7 +3498,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-effects"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "log",
  "oracle-motion-color",
@@ -3515,7 +3515,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-engine"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "craft-docpath",
  "exr",
@@ -3550,7 +3550,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-export"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "filmcraft-aac",
  "filmcraft-h264enc",
@@ -3580,7 +3580,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-expr"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "boa_engine",
  "oracle-motion-color",
@@ -3597,7 +3597,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-geom"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "proptest",
  "serde",
@@ -3605,7 +3605,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-gpu"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "bytemuck",
  "js-sys",
@@ -3627,14 +3627,14 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-hevcenc"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "filmcraft-hevc",
 ]
 
 [[package]]
 name = "oracle-motion-host"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "exr",
  "gif 0.14.2",
@@ -3660,7 +3660,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-interchange"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "filmcraft-color",
  "filmcraft-geom",
@@ -3679,7 +3679,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-keyframe"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "oracle-motion-color",
  "oracle-motion-geom",
@@ -3691,7 +3691,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-lottie"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "craft-docpath",
  "kurbo 0.13.1",
@@ -3709,7 +3709,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-media"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "craft-docpath",
  "exr",
@@ -3738,7 +3738,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-model"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "image",
  "miniz_oxide 0.8.9",
@@ -3750,14 +3750,14 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-opusenc"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "filmcraft-opus",
 ]
 
 [[package]]
 name = "oracle-motion-path"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "kurbo 0.13.1",
  "linesweeper",
@@ -3769,7 +3769,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-pdf"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "craft-pdf",
  "image",
@@ -3785,7 +3785,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-plugin"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "oracle-motion-effects",
  "oracle-motion-keyframe",
@@ -3797,7 +3797,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-project"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "oracle-motion-color",
  "oracle-motion-geom",
@@ -3810,14 +3810,14 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-psd"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "miniz_oxide 0.8.9",
 ]
 
 [[package]]
 name = "oracle-motion-raster"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "oracle-motion-color",
  "oracle-motion-geom",
@@ -3826,7 +3826,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-render"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "kurbo 0.13.1",
  "log",
@@ -3848,7 +3848,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-script"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "boa_engine",
  "oracle-motion-engine",
@@ -3865,7 +3865,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-segment"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "miniz_oxide 0.8.9",
  "ndarray",
@@ -3874,7 +3874,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-svg"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "kurbo 0.13.1",
  "oracle-motion-geom",
@@ -3886,7 +3886,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-text"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "harfrust",
  "kurbo 0.13.1",
@@ -3898,7 +3898,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-time"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "proptest",
  "serde",
@@ -3906,7 +3906,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-track"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "oracle-motion-raster",
  "oracle-motion-segment",
@@ -3918,7 +3918,7 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-ui-egui"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "craft-ui",
  "eframe",
@@ -3952,11 +3952,11 @@ dependencies = [
 
 [[package]]
 name = "oracle-motion-vp9enc"
-version = "0.16.0"
+version = "0.17.0"
 
 [[package]]
 name = "oracle-motion-web"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "eframe",
  "egui",
@@ -6965,7 +6965,7 @@ checksum = "ec7a2a501ed189703dba8b08142f057e887dfc4b2cc4db2d343ac6376ba3e0b9"
 
 [[package]]
 name = "xtask"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "serde_json",
 ]
