@@ -384,8 +384,8 @@ pub fn demo_project() -> Project {
     let mut title = text_layer(
         &mut p,
         &comp,
-        "ORACLE_MOTION",
-        TextDoc { text: "ORACLE_MOTION".into(), size: 148.0, style: "Bold".into(), tracking: 120.0, justify: Justify::Center, ..Default::default() },
+        "ORACLE MOTION",
+        TextDoc { text: "ORACLE MOTION".into(), size: 148.0, style: "Bold".into(), tracking: 120.0, justify: Justify::Center, ..Default::default() },
         [960.0, 560.0],
     );
     let mut next = p.next_id;
