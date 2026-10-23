@@ -1,11 +1,11 @@
 //! Guide layers: drawn in their own comp's viewer (`RenderOpts::guides`), never when that comp is
 //! nested in another (precomp, collapsed precomp, 2D or 3D), and never in final renders.
 
-use effectcraft_color::Label;
-use effectcraft_keyframe::Value;
-use effectcraft_project::build;
-use effectcraft_project::{BitDepth, Comp, ItemId, ItemKind, Layer, LayerSource, Project, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::Label;
+use oracle_motion_keyframe::Value;
+use oracle_motion_project::build;
+use oracle_motion_project::{BitDepth, Comp, ItemId, ItemKind, Layer, LayerSource, Project, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 
 use crate::{NoFootage, RenderOpts, Renderer};
 
@@ -44,7 +44,7 @@ fn scene(nest: Nest) -> (Project, ItemId, ItemId) {
     let iid = p.add_item("Inner", Label::Sandstone, None, ItemKind::Comp(inner.into()));
     let mut outer = Comp::new(100, 100, FrameRate::FPS_30, Tick::from_seconds_f64(2.0));
     if matches!(nest, Nest::CollapsedAdvanced) {
-        outer.renderer = effectcraft_project::Renderer::Advanced3D;
+        outer.renderer = oracle_motion_project::Renderer::Advanced3D;
     }
     let mut pre = build::layer(&mut p, &outer, "Inner", LayerSource::Comp { item: iid }, (100, 100), None);
     pre.switches.collapse = !matches!(nest, Nest::Precomp);

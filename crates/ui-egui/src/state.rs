@@ -230,8 +230,8 @@ impl Tool {
 }
 
 /// The viewer's Resolution: each composition keeps its own in the project
-/// ([`effectcraft_engine::project::Comp::resolution`], `EffectcraftApp::viewer_res`).
-pub use effectcraft_engine::project::Resolution;
+/// ([`oracle_motion_engine::project::Comp::resolution`], `OracleMotionApp::viewer_res`).
+pub use oracle_motion_engine::project::Resolution;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(default)]

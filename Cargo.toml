@@ -8,44 +8,44 @@ version = "0.16.0"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 rust-version = "1.95"
-repository = "https://github.com/storytold/effectcraft"
+repository = "https://github.com/Marvingxx/oracle-motion"
 
 [workspace.dependencies]
 craft-pdf = { git = "https://github.com/storytold/craft-libs", rev = "ca50d63b773c99f96e75c77ce5a1d21e7c9cda0d", version = "=0.1.0", default-features = false, features = ["read"] }
 craft-docpath = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "82a24b006eefa036b43c09a67fb9a3fbd17ffe63" }
 # internal
-effectcraft-time = { path = "crates/time" }
-effectcraft-geom = { path = "crates/geom" }
-effectcraft-color = { path = "crates/color" }
-effectcraft-raster = { path = "crates/raster" }
-effectcraft-path = { path = "crates/path" }
-effectcraft-keyframe = { path = "crates/keyframe" }
-effectcraft-project = { path = "crates/project" }
-effectcraft-text = { path = "crates/text" }
-effectcraft-effects = { path = "crates/effects" }
-effectcraft-track = { path = "crates/track" }
-effectcraft-segment = { path = "crates/segment" }
-effectcraft-model = { path = "crates/model" }
-effectcraft-render = { path = "crates/render" }
-effectcraft-gpu = { path = "crates/gpu" }
-effectcraft-media = { path = "crates/media" }
-effectcraft-export = { path = "crates/export" }
-effectcraft-expr = { path = "crates/expr" }
-effectcraft-lottie = { path = "crates/lottie" }
-effectcraft-interchange = { path = "crates/interchange" }
-effectcraft-pdf = { path = "crates/pdf" }
-effectcraft-psd = { path = "crates/psd" }
-effectcraft-vp9enc = { path = "crates/vp9enc" }
-effectcraft-svg = { path = "crates/svg" }
-effectcraft-engine = { path = "crates/engine" }
-effectcraft-host = { path = "crates/host" }
-effectcraft-ui-egui = { path = "crates/ui-egui" }
-effectcraft-automation = { path = "crates/automation" }
-effectcraft-opusenc = { path = "crates/opusenc" }
-effectcraft-script = { path = "crates/script" }
-effectcraft-hevcenc = { path = "crates/hevcenc" }
-effectcraft-av1enc = { path = "crates/av1enc" }
-effectcraft-plugin = { path = "crates/plugin" }
+oracle-motion-time = { path = "crates/time" }
+oracle-motion-geom = { path = "crates/geom" }
+oracle-motion-color = { path = "crates/color" }
+oracle-motion-raster = { path = "crates/raster" }
+oracle-motion-path = { path = "crates/path" }
+oracle-motion-keyframe = { path = "crates/keyframe" }
+oracle-motion-project = { path = "crates/project" }
+oracle-motion-text = { path = "crates/text" }
+oracle-motion-effects = { path = "crates/effects" }
+oracle-motion-track = { path = "crates/track" }
+oracle-motion-segment = { path = "crates/segment" }
+oracle-motion-model = { path = "crates/model" }
+oracle-motion-render = { path = "crates/render" }
+oracle-motion-gpu = { path = "crates/gpu" }
+oracle-motion-media = { path = "crates/media" }
+oracle-motion-export = { path = "crates/export" }
+oracle-motion-expr = { path = "crates/expr" }
+oracle-motion-lottie = { path = "crates/lottie" }
+oracle-motion-interchange = { path = "crates/interchange" }
+oracle-motion-pdf = { path = "crates/pdf" }
+oracle-motion-psd = { path = "crates/psd" }
+oracle-motion-vp9enc = { path = "crates/vp9enc" }
+oracle-motion-svg = { path = "crates/svg" }
+oracle-motion-engine = { path = "crates/engine" }
+oracle-motion-host = { path = "crates/host" }
+oracle-motion-ui-egui = { path = "crates/ui-egui" }
+oracle-motion-automation = { path = "crates/automation" }
+oracle-motion-opusenc = { path = "crates/opusenc" }
+oracle-motion-script = { path = "crates/script" }
+oracle-motion-hevcenc = { path = "crates/hevcenc" }
+oracle-motion-av1enc = { path = "crates/av1enc" }
+oracle-motion-plugin = { path = "crates/plugin" }
 
 # foundation
 thiserror = "2"
@@ -83,10 +83,10 @@ filmcraft-h264enc = { git = "https://github.com/storytold/filmcraft", rev = "2c5
 filmcraft-prores = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
 filmcraft-aac = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
 filmcraft-isobmff = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
-# decoder used as the round-trip oracle of effectcraft-opusenc (crates/export dev-dependency)
+# decoder used as the round-trip oracle of oracle-motion-opusenc (crates/export dev-dependency)
 filmcraft-opus = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
 filmcraft-vp9 = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
-# decoders used as the round-trip oracles of effectcraft-hevcenc / effectcraft-av1enc (dev-dependencies only)
+# decoders used as the round-trip oracles of oracle-motion-hevcenc / oracle-motion-av1enc (dev-dependencies only)
 filmcraft-hevc = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
 filmcraft-av1 = { git = "https://github.com/storytold/filmcraft", rev = "2c5ba7a72619935f0481f99d59409e0d1844b234" }
 # timeline interchange (EDL, FCP7 XML, FCPXML, OTIO) for Premiere Pro interop (crates/interchange only)
@@ -142,40 +142,40 @@ opt-level = 2
 opt-level = 1
 
 # Pixel hot loops: keep debug builds interactive.
-[profile.dev.package.effectcraft-raster]
+[profile.dev.package.oracle-motion-raster]
 opt-level = 3
 
-[profile.dev.package.effectcraft-render]
+[profile.dev.package.oracle-motion-render]
 opt-level = 3
 
-[profile.dev.package.effectcraft-gpu]
+[profile.dev.package.oracle-motion-gpu]
 opt-level = 3
 
-[profile.dev.package.effectcraft-effects]
+[profile.dev.package.oracle-motion-effects]
 opt-level = 3
 
-[profile.dev.package.effectcraft-track]
+[profile.dev.package.oracle-motion-track]
 opt-level = 3
 
-[profile.dev.package.effectcraft-path]
+[profile.dev.package.oracle-motion-path]
 opt-level = 3
 
-[profile.dev.package.effectcraft-media]
+[profile.dev.package.oracle-motion-media]
 opt-level = 3
 
-[profile.dev.package.effectcraft-opusenc]
+[profile.dev.package.oracle-motion-opusenc]
 opt-level = 3
 
-[profile.dev.package.effectcraft-export]
+[profile.dev.package.oracle-motion-export]
 opt-level = 3
 
-[profile.dev.package.effectcraft-vp9enc]
+[profile.dev.package.oracle-motion-vp9enc]
 opt-level = 3
 
-[profile.dev.package.effectcraft-hevcenc]
+[profile.dev.package.oracle-motion-hevcenc]
 opt-level = 3
 
-[profile.dev.package.effectcraft-av1enc]
+[profile.dev.package.oracle-motion-av1enc]
 opt-level = 3
 
 # FilmCraft codec hot loops (same settings as FilmCraft's own workspace).

@@ -1,6 +1,6 @@
 [package]
-name = "effectcraft-engine"
-description = "The EffectCraft engine: session, undo history, editor state and the command registry every frontend (UI, CLI, control channel, MCP) dispatches through"
+name = "oracle-motion-engine"
+description = "The Oracle Motion engine: session, undo history, editor state and the command registry every frontend (UI, CLI, control channel, MCP) dispatches through"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -11,25 +11,25 @@ workspace = true
 
 [dependencies]
 craft-docpath = { workspace = true }
-effectcraft-time = { workspace = true }
-effectcraft-geom = { workspace = true }
-effectcraft-color = { workspace = true }
-effectcraft-keyframe = { workspace = true }
-effectcraft-project = { workspace = true }
-effectcraft-raster = { workspace = true }
-effectcraft-path = { workspace = true }
-effectcraft-text = { workspace = true }
-effectcraft-effects = { workspace = true }
-effectcraft-render = { workspace = true }
-effectcraft-segment = { workspace = true }
-effectcraft-track = { workspace = true }
-effectcraft-model = { workspace = true }
-effectcraft-lottie = { workspace = true }
-effectcraft-interchange = { workspace = true }
-effectcraft-psd = { workspace = true }
+oracle-motion-time = { workspace = true }
+oracle-motion-geom = { workspace = true }
+oracle-motion-color = { workspace = true }
+oracle-motion-keyframe = { workspace = true }
+oracle-motion-project = { workspace = true }
+oracle-motion-raster = { workspace = true }
+oracle-motion-path = { workspace = true }
+oracle-motion-text = { workspace = true }
+oracle-motion-effects = { workspace = true }
+oracle-motion-render = { workspace = true }
+oracle-motion-segment = { workspace = true }
+oracle-motion-track = { workspace = true }
+oracle-motion-model = { workspace = true }
+oracle-motion-lottie = { workspace = true }
+oracle-motion-interchange = { workspace = true }
+oracle-motion-psd = { workspace = true }
 kurbo = { workspace = true }
-effectcraft-svg = { workspace = true }
-effectcraft-pdf = { workspace = true }
+oracle-motion-svg = { workspace = true }
+oracle-motion-pdf = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
@@ -38,3 +38,7 @@ rayon = { workspace = true }
 image = { workspace = true }
 web-time = { workspace = true }
 exr = { workspace = true }
+
+# Documents of the other Oracle apps, drawn by them (oracle_files.rs).
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+oracle-suite-link = { path = "../../../oracle-library/link" }

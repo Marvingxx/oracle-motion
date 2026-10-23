@@ -4,9 +4,9 @@
 
 use std::sync::Arc;
 
-use effectcraft_project::{Footage, FootageKind, ItemId};
-use effectcraft_raster::Image;
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_project::{Footage, FootageKind, ItemId};
+use oracle_motion_raster::Image;
+use oracle_motion_time::{FrameRate, Tick};
 use serde_json::json;
 
 use crate::Session;

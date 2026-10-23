@@ -1,6 +1,6 @@
 //! `cargo xtask bench`: a repeatable render benchmark (docs/testing.md "Render benchmark", gaps.md G5).
 //!
-//! Generates deterministic projects into `target/bench/projects` with `effectcraft-cli` (engine
+//! Generates deterministic projects into `target/bench/projects` with `oracle-motion-cli` (engine
 //! commands, no committed media), renders each at Full and Half plus one single frame, and measures
 //! every run with `/usr/bin/time` (macOS `-l`: peak memory footprint, max RSS, instructions
 //! retired; Linux `-v`: max RSS; elsewhere wall time only). Prints a table and appends one JSON
@@ -16,10 +16,10 @@ use serde_json::{Value, json};
 
 const HELP: &str = "usage: cargo xtask bench [options]
 
-Renders generated scenarios with effectcraft-cli and records memory, CPU and wall time.
+Renders generated scenarios with oracle-motion-cli and records memory, CPU and wall time.
 Run it under `nice -n 10` on a busy machine; the table notes the load average of every run.
 
-  --bin PATH            use this effectcraft-cli binary. Without it, effectcraft-cli is built once
+  --bin PATH            use this oracle-motion-cli binary. Without it, oracle-motion-cli is built once
                         with `cargo build --release` into target/bench (its own target dir:
                         the first build compiles everything, later ones are incremental)
   --scenario a,b        only these scenarios: demo, layers, precomps, footage (default: all)
@@ -178,19 +178,19 @@ pub fn run(root: &Path, args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
-/// `cargo build -p effectcraft-cli --release` into `target/bench`.
+/// `cargo build -p oracle-motion-cli --release` into `target/bench`.
 fn build_cli(root: &Path, dir: &Path) -> Result<PathBuf, String> {
-    eprintln!("bench: building effectcraft-cli (--release) into {} (one build; pass --bin to skip)", dir.display());
+    eprintln!("bench: building oracle-motion-cli (--release) into {} (one build; pass --bin to skip)", dir.display());
     let st = Command::new(env!("CARGO"))
         .current_dir(root)
         .env("CARGO_TARGET_DIR", dir)
-        .args(["build", "-p", "effectcraft-cli", "--release"])
+        .args(["build", "-p", "oracle-motion-cli", "--release"])
         .status()
         .map_err(|e| e.to_string())?;
     if !st.success() {
-        return Err("building effectcraft-cli failed".into());
+        return Err("building oracle-motion-cli failed".into());
     }
-    Ok(dir.join("release").join(format!("effectcraft-cli{}", std::env::consts::EXE_SUFFIX)))
+    Ok(dir.join("release").join(format!("oracle-motion-cli{}", std::env::consts::EXE_SUFFIX)))
 }
 
 // -------------------------------------------------------------------------------------- scenarios
@@ -427,7 +427,7 @@ fn footage_cmds(seq_first: &Path, clip: &Path, still: &Path) -> Cmds {
     c
 }
 
-/// Run `cmds` with `effectcraft-cli --empty run … --save-as out`.
+/// Run `cmds` with `oracle-motion-cli --empty run … --save-as out`.
 fn build_project(bin: &Path, cmds: &Cmds, out: &Path) -> Result<(), String> {
     let mut cmd = Command::new(bin);
     cmd.arg("--empty").arg("run");
@@ -446,7 +446,7 @@ fn cli(cmd: &mut Command) -> Result<(), String> {
     }
     let err = String::from_utf8_lossy(&out.stderr);
     let tail: Vec<&str> = err.lines().rev().take(8).collect();
-    Err(format!("effectcraft-cli failed ({}):\n{}", out.status, tail.into_iter().rev().collect::<Vec<_>>().join("\n")))
+    Err(format!("oracle-motion-cli failed ({}):\n{}", out.status, tail.into_iter().rev().collect::<Vec<_>>().join("\n")))
 }
 
 fn generate(bin: &Path, dir: &Path, name: &str, regen: bool) -> Result<Scenario, String> {
@@ -459,7 +459,7 @@ fn generate(bin: &Path, dir: &Path, name: &str, regen: bool) -> Result<Scenario,
         start: 0.0,
     };
     match name {
-        "demo" => Ok(Scenario { name: name.into(), source: vec!["--demo".into()], comp: "EffectCraft Intro".into(), fps: 30_000.0 / 1001.0, start: 0.0 }),
+        "demo" => Ok(Scenario { name: name.into(), source: vec!["--demo".into()], comp: "Oracle Motion Intro".into(), fps: 30_000.0 / 1001.0, start: 0.0 }),
         "layers" => {
             build_project(bin, &layers_cmds(), &projects.join("layers.ecproj"))?;
             Ok(project("layers.ecproj", "Layers"))
@@ -1104,7 +1104,7 @@ mod tests {
            728548408  peak memory footprint
 ";
 
-    const GNU: &str = "\tCommand being timed: \"effectcraft-cli --demo info\"
+    const GNU: &str = "\tCommand being timed: \"oracle-motion-cli --demo info\"
 \tUser time (seconds): 1.25
 \tSystem time (seconds): 0.30
 \tPercent of CPU this job got: 150%

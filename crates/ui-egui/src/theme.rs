@@ -136,9 +136,9 @@ impl Tokens {
             panel_bg: Color32::from_rgb(0x23, 0x23, 0x23),
             tab_text: Color32::from_rgb(0x9a, 0x9a, 0x9a),
             tab_text_active: Color32::from_rgb(0xe3, 0xe3, 0xe3),
-            focus: Color32::from_rgb(0x2d, 0x8c, 0xeb),
-            accent: Color32::from_rgb(0x2d, 0x8c, 0xeb),
-            accent_hover: Color32::from_rgb(0x4a, 0xa0, 0xf5),
+            focus: Color32::from_rgb(0xd3, 0x1c, 0x3b),
+            accent: Color32::from_rgb(0xd3, 0x1c, 0x3b),
+            accent_hover: Color32::from_rgb(0xe5, 0x2c, 0x54),
             text: Color32::from_rgb(0xc8, 0xc8, 0xc8),
             text_dim: Color32::from_rgb(0x9a, 0x9a, 0x9a),
             text_faint: Color32::from_rgb(0x8c, 0x8c, 0x8c),
@@ -152,23 +152,23 @@ impl Tokens {
             row: Color32::from_rgb(0x23, 0x23, 0x23),
             row_alt: Color32::from_rgb(0x27, 0x27, 0x27),
             row_selected: Color32::from_rgb(0x3a, 0x3a, 0x3a),
-            hot_text: Color32::from_rgb(0x3d, 0x8f, 0xf5),
+            hot_text: Color32::from_rgb(0xe5, 0x2c, 0x54),
             tl_bg: Color32::from_rgb(0x1b, 0x1b, 0x1b),
             tl_ruler_bg: Color32::from_rgb(0x23, 0x23, 0x23),
             tl_ruler_tick: Color32::from_rgb(0x70, 0x70, 0x70),
             tl_ruler_text: Color32::from_rgb(0x9a, 0x9a, 0x9a),
-            cti: Color32::from_rgb(0x2d, 0x8c, 0xeb),
+            cti: Color32::from_rgb(0xd3, 0x1c, 0x3b),
             work_area: Color32::from_rgb(0x4a, 0x4a, 0x4a),
             cache_green: Color32::from_rgb(0x3c, 0xa6, 0x4c),
             cache_blue: Color32::from_rgb(0x3a, 0x6f, 0xd8),
             keyframe: Color32::from_rgb(0xa8, 0xa8, 0xa8),
-            keyframe_selected: Color32::from_rgb(0x3d, 0x8f, 0xf5),
+            keyframe_selected: Color32::from_rgb(0xe5, 0x2c, 0x54),
             pasteboard: Color32::from_rgb(0x1a, 0x1a, 0x1a),
-            timecode: Color32::from_rgb(0x3d, 0x8f, 0xf5),
+            timecode: Color32::from_rgb(0xe5, 0x2c, 0x54),
             danger: Color32::from_rgb(0xe0, 0x4a, 0x3c),
             warning: Color32::from_rgb(0xe8, 0x9a, 0x2c),
             fx_header: Color32::from_rgb(0x2a, 0x2a, 0x2a),
-            fx_header_active: Color32::from_rgb(0x2f, 0x3a, 0x52),
+            fx_header_active: Color32::from_rgb(0x4a, 0x26, 0x2d),
             tl_graph_selected: Color32::from_rgb(0x2a, 0x2a, 0x2a),
             switch_well: Color32::from_rgb(0x19, 0x19, 0x19),
             tl_nav_bar: Color32::from_rgb(0x55, 0x55, 0x55),
@@ -217,7 +217,7 @@ impl Tokens {
                 separator: Color32::from_rgb(0xc8, 0xc8, 0xc8),
                 row: Color32::from_rgb(0xe6, 0xe6, 0xe6),
                 row_alt: Color32::from_rgb(0xde, 0xde, 0xde),
-                row_selected: Color32::from_rgb(0xaa, 0xc8, 0xf0),
+                row_selected: Color32::from_rgb(0xf2, 0xc4, 0xcd),
                 tl_bg: Color32::from_rgb(0xd2, 0xd2, 0xd2),
                 tl_ruler_bg: Color32::from_rgb(0xe2, 0xe2, 0xe2),
                 tl_ruler_text: Color32::from_rgb(0x50, 0x50, 0x50),
@@ -252,17 +252,17 @@ impl Tokens {
         FontId::new(size, FontFamily::Name("medium".into()))
     }
     /// sRGB colour of an item/layer label (Settings ▸ Labels).
-    pub fn label(&self, l: effectcraft_color::Label) -> Color32 {
-        let i = effectcraft_color::Label::ALL.iter().position(|x| *x == l).unwrap_or(0);
+    pub fn label(&self, l: oracle_motion_color::Label) -> Color32 {
+        let i = oracle_motion_color::Label::ALL.iter().position(|x| *x == l).unwrap_or(0);
         self.labels[i]
     }
 
     /// Theme tokens for the current settings: theme, UI brightness and label colours.
     /// The tokens for theme `kind` (resolved from the appearance mode) with the rest of the
     /// Appearance settings: brightness, label colours, gradients.
-    pub fn from_prefs(p: &effectcraft_engine::prefs::Prefs, kind: ThemeKind) -> Tokens {
+    pub fn from_prefs(p: &oracle_motion_engine::prefs::Prefs, kind: ThemeKind) -> Tokens {
         let mut t = Tokens::for_kind(kind).with_brightness(p.appearance.brightness as f32);
-        for (i, l) in effectcraft_color::Label::ALL.iter().enumerate() {
+        for (i, l) in oracle_motion_color::Label::ALL.iter().enumerate() {
             let [r, g, b] = p.label_rgb(*l);
             t.labels[i] = Color32::from_rgb(r, g, b);
         }
@@ -312,7 +312,7 @@ impl Tokens {
 }
 
 fn default_labels() -> [Color32; 17] {
-    effectcraft_color::Label::ALL.map(|l| {
+    oracle_motion_color::Label::ALL.map(|l| {
         let [r, g, b] = l.rgb();
         Color32::from_rgb(r, g, b)
     })
@@ -322,13 +322,27 @@ static INTER_REGULAR: &[u8] = include_bytes!("../../../assets/fonts/Inter-Regula
 static INTER_MEDIUM: &[u8] = include_bytes!("../../../assets/fonts/Inter-Medium.ttf");
 static INTER_SEMIBOLD: &[u8] = include_bytes!("../../../assets/fonts/Inter-SemiBold.ttf");
 static JETBRAINS_MONO: &[u8] = include_bytes!("../../../assets/fonts/JetBrainsMono-Regular.ttf");
+/// Lexend (OFL-1.1), the Oracle suite's interface typeface: one variable file, every weight.
+static LEXEND: &[u8] = include_bytes!("../../../assets/fonts/Lexend-Variable.ttf");
+/// Lexend's letters are wider than Inter's, which the panels are laid out for: drawn a little
+/// smaller than its size, it fits the same rows and columns.
+const LEXEND_SCALE: f32 = 0.88;
 
-/// Install fonts (Inter, Inter Medium/SemiBold, JetBrains Mono) and egui visuals. `language` is the
+/// Lexend at `weight` as a font face.
+fn lexend(weight: f32) -> FontData {
+    FontData::from_static(LEXEND).tweak(egui::epaint::text::FontTweak {
+        scale: LEXEND_SCALE,
+        coords: egui::epaint::text::VariationCoords::new([(*b"wght", weight)]),
+        ..Default::default()
+    })
+}
+
+/// Install fonts (Lexend at three weights, with Inter behind it, and JetBrains Mono) and egui visuals. `language` is the
 /// resolved interface language from [`crate::i18n::language`] (`en`, `ja`, `zh-hans` or `zh-hant`),
 /// not the stored `general.language` preference: `system` is already resolved there, so a Chinese
 /// system draws Chinese with the default setting. The CJK fallback that draws the interface's own
 /// script is registered first, so a Chinese interface is drawn by a Chinese face and a Japanese one
-/// by a Japanese face. `install` is called again when the language changes (see the `EffectcraftApp`
+/// by a Japanese face. `install` is called again when the language changes (see the `OracleMotionApp`
 /// frame loop), so the fonts do not need a restart.
 pub fn install(ctx: &egui::Context, t: &Tokens, language: &str) {
     let mut fonts = FontDefinitions::default();
@@ -336,10 +350,14 @@ pub fn install(ctx: &egui::Context, t: &Tokens, language: &str) {
     fonts.font_data.insert("inter-medium".into(), Arc::new(FontData::from_static(INTER_MEDIUM)));
     fonts.font_data.insert("inter-semibold".into(), Arc::new(FontData::from_static(INTER_SEMIBOLD)));
     fonts.font_data.insert("jbmono".into(), Arc::new(FontData::from_static(JETBRAINS_MONO)));
-    fonts.families.entry(FontFamily::Proportional).or_default().insert(0, "inter".into());
+    fonts.font_data.insert("lexend".into(), Arc::new(lexend(400.0)));
+    fonts.font_data.insert("lexend-medium".into(), Arc::new(lexend(500.0)));
+    fonts.font_data.insert("lexend-semibold".into(), Arc::new(lexend(600.0)));
+    // Lexend first, Inter behind it for the glyphs Lexend lacks.
+    fonts.families.entry(FontFamily::Proportional).or_default().splice(0..0, ["lexend".to_string(), "inter".to_string()]);
     fonts.families.entry(FontFamily::Monospace).or_default().insert(0, "jbmono".into());
-    fonts.families.insert(FontFamily::Name("semibold".into()), vec!["inter-semibold".into(), "inter".into()]);
-    fonts.families.insert(FontFamily::Name("medium".into()), vec!["inter-medium".into(), "inter".into()]);
+    fonts.families.insert(FontFamily::Name("semibold".into()), vec!["lexend-semibold".into(), "inter-semibold".into(), "inter".into()]);
+    fonts.families.insert(FontFamily::Name("medium".into()), vec!["lexend-medium".into(), "inter-medium".into(), "inter".into()]);
     // Inter and egui's own fallbacks have no small triangles (the `▸` of "File ▸ Import"), which
     // would draw as missing-glyph boxes: JetBrains Mono fills in the symbols the others lack.
     for (family, stack) in &mut fonts.families {
@@ -393,7 +411,7 @@ fn install_script_fallbacks(family_fonts: &mut FontDefinitions, language: &str) 
     }
     #[cfg(not(target_arch = "wasm32"))]
     {
-        use effectcraft_text::fonts;
+        use oracle_motion_text::fonts;
         // Kana is unambiguously Japanese; Han ideographs are shared, so the order decides which
         // language's face draws them.
         const KANA: (char, &str) = ('あ', "japanese-system");
@@ -530,7 +548,7 @@ pub fn apply_visuals(ctx: &egui::Context, t: &Tokens) {
 
 #[cfg(all(test, not(target_arch = "wasm32")))]
 mod script_font_tests {
-    use effectcraft_text::fonts;
+    use oracle_motion_text::fonts;
 
     /// Whether an installed face covers `probe` (else the glyph check is skipped).
     fn installed(probe: char) -> bool {
@@ -717,7 +735,7 @@ mod tests {
 
     #[test]
     fn hangul_gets_a_face_when_one_is_installed() {
-        use effectcraft_text::fonts;
+        use oracle_motion_text::fonts;
         let mut fonts_def = FontDefinitions::default();
         install_script_fallbacks(&mut fonts_def, "en");
         let base = fonts::resolve("Inter", "Regular").face;

@@ -1,6 +1,6 @@
 [package]
-name = "effectcraft-ui-egui"
-description = "The EffectCraft egui frontend (swappable): docking panels, composition viewer, timeline, effect controls, control channel"
+name = "oracle-motion-ui-egui"
+description = "The Oracle Motion egui frontend (swappable): docking panels, composition viewer, timeline, effect controls, control channel"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -11,16 +11,16 @@ workspace = true
 
 [dependencies]
 craft-ui = { workspace = true }
-effectcraft-time = { workspace = true }
-effectcraft-geom = { workspace = true }
-effectcraft-color = { workspace = true }
-effectcraft-keyframe = { workspace = true }
-effectcraft-project = { workspace = true }
-effectcraft-path = { workspace = true }
-effectcraft-text = { workspace = true }
-effectcraft-render = { workspace = true }
-effectcraft-engine = { workspace = true }
-effectcraft-gpu = { workspace = true }
+oracle-motion-time = { workspace = true }
+oracle-motion-geom = { workspace = true }
+oracle-motion-color = { workspace = true }
+oracle-motion-keyframe = { workspace = true }
+oracle-motion-project = { workspace = true }
+oracle-motion-path = { workspace = true }
+oracle-motion-text = { workspace = true }
+oracle-motion-render = { workspace = true }
+oracle-motion-engine = { workspace = true }
+oracle-motion-gpu = { workspace = true }
 egui = { workspace = true }
 eframe = { workspace = true, features = ["default_fonts", "wgpu", "accesskit"] }
 serde = { workspace = true }
@@ -33,11 +33,14 @@ image = { workspace = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 sys-locale = { workspace = true }
+# The Oracle suite: the library window, and the other apps (oracle_suite.rs).
+oracle-library-ui = { path = "../../../oracle-library/ui" }
+oracle-suite-link = { path = "../../../oracle-library/link" }
 
 [dev-dependencies]
 egui_kittest = { workspace = true, features = ["eframe", "wgpu"] }
 pollster = "0.4"
-effectcraft-host = { workspace = true }
+oracle-motion-host = { workspace = true }
 exr = { workspace = true }
 
 [build-dependencies]

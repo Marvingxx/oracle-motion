@@ -1,0 +1,8 @@
+asset:        Lexend-Variable.ttf
+title:        Lexend (variable), the Oracle interface typeface
+author:       Bonnie Shaver-Troup, Thomas Jockin and the Lexend Project Authors
+source:       https://github.com/googlefonts/lexend
+license:      OFL-1.1
+license-file: assets/fonts/OFL-Lexend.txt
+added:        2026-10-23 by Claude (agent)
+notes:        The Oracle suite's interface font (oracle-brand/style).

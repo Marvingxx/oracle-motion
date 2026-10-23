@@ -18,7 +18,7 @@
 use std::collections::BTreeSet;
 use std::sync::{Arc, Mutex};
 
-use effectcraft_project::{Footage, FootageKind, ItemId, ItemKind, SourceLayer};
+use oracle_motion_project::{Footage, FootageKind, ItemId, ItemKind, SourceLayer};
 use serde_json::{Value, json};
 
 use crate::Session;
@@ -53,7 +53,7 @@ fn watched(s: &Session) -> BTreeSet<String> {
 /// Size and position in the stack of Photoshop layer `l` in the file at `path` now: the layer
 /// at its recorded index when the name still matches, else the first layer with its name.
 fn psd_layer(s: &Session, path: &str, l: &SourceLayer) -> Option<(u32, Option<(u32, u32)>)> {
-    let psd = effectcraft_psd::Psd::parse(s.services.read_file(path).ok()?).ok()?;
+    let psd = oracle_motion_psd::Psd::parse(s.services.read_file(path).ok()?).ok()?;
     let found = psd.layers.get(l.index as usize).filter(|x| x.name == l.name).or_else(|| psd.layers.iter().find(|x| x.name == l.name))?;
     let size = (!found.rect.is_empty()).then(|| (found.rect.width(), found.rect.height()));
     Some((u32::try_from(found.index).ok()?, size))
@@ -247,7 +247,9 @@ pub fn apply_stamps(s: &mut Session, now: Vec<(String, Option<Stamp>)>) -> crate
 /// `footage.reloadChanged`: stamp the watched files now and reload the ones that changed.
 pub(crate) fn command(s: &mut Session, _: &Value) -> crate::Result<Value> {
     let services = s.services.clone();
-    let now = watched(s).into_iter().map(|p| (p.clone(), services.stamp(&p))).collect();
+    let paths = watched(s);
+    crate::oracle_files::refresh(&paths);
+    let now = paths.into_iter().map(|p| (p.clone(), services.stamp(&p))).collect();
     apply_stamps(s, now)
 }
 
@@ -265,6 +267,8 @@ pub fn start_scan(s: &mut Session) {
     let slot: Scan = Arc::default();
     let out = slot.clone();
     let spawned = std::thread::Builder::new().name("footage-watch".into()).spawn(move || {
+        // Drawings of other Oracle apps' documents saved since: drawn again first, so they read changed.
+        crate::oracle_files::refresh(&paths);
         let stamps = paths.into_iter().map(|p| (p.clone(), services.stamp(&p))).collect();
         *out.lock().unwrap_or_else(std::sync::PoisonError::into_inner) = Some(stamps);
     });

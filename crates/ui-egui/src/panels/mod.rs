@@ -61,12 +61,12 @@ pub mod viewers;
 pub mod waveform;
 
 use crate::i18n::tr;
-use effectcraft_engine::Session;
-use effectcraft_engine::project::Comp;
-use effectcraft_engine::time::Tick;
+use oracle_motion_engine::Session;
+use oracle_motion_engine::project::Comp;
+use oracle_motion_engine::time::Tick;
 use egui::Rect;
 
-use crate::EffectcraftApp;
+use crate::OracleMotionApp;
 use crate::dock::PanelKind;
 
 /// Drag-and-drop payloads between panels.
@@ -122,8 +122,8 @@ impl PresetRef {
 /// Layers carried by a Project item drag. Dragging a selected item uses the
 /// complete selection, while dragging an unselected item uses only that item.
 /// Folders and data files are not composition layers.
-pub(crate) fn project_drop_items(app: &EffectcraftApp, dragged: u64) -> Vec<u64> {
-    use effectcraft_engine::project::{FootageKind, ItemId, ItemKind};
+pub(crate) fn project_drop_items(app: &OracleMotionApp, dragged: u64) -> Vec<u64> {
+    use oracle_motion_engine::project::{FootageKind, ItemId, ItemKind};
 
     let selected = &app.session.state.project_selection;
     let candidates: Vec<u64> = if selected.iter().any(|id| id.0 == dragged) {
@@ -148,16 +148,16 @@ pub(crate) fn project_drop_items(app: &EffectcraftApp, dragged: u64) -> Vec<u64>
 /// The current time formatted per project settings (timecode with `;` for drop-frame, frames
 /// or Feet + Frames).
 pub fn timecode(session: &Session, comp: &Comp, t: Tick) -> String {
-    effectcraft_engine::commands::time::display_time(session, comp, t)
+    oracle_motion_engine::commands::time::display_time(session, comp, t)
 }
 
 /// Ctrl/Cmd-click on a current-time display toggles the project's Time Display Style between
 /// Timecode and Frames, as in After Effects (through Project Settings: one undo step).
-pub(crate) fn toggle_time_display(app: &mut EffectcraftApp, resp: &egui::Response) {
+pub(crate) fn toggle_time_display(app: &mut OracleMotionApp, resp: &egui::Response) {
     if !(resp.clicked() && resp.ctx.input(|i| i.modifiers.command)) {
         return;
     }
-    let timecode = app.session.project.settings.time_display == effectcraft_engine::project::TimeDisplayStyle::Timecode;
+    let timecode = app.session.project.settings.time_display == oracle_motion_engine::project::TimeDisplayStyle::Timecode;
     if let Err(e) = app.session.execute("file.projectSettings", serde_json::json!({"timeDisplay": if timecode { "frames" } else { "timecode" }})) {
         app.ui.status = e.to_string();
     }
@@ -169,7 +169,7 @@ pub(crate) fn space_hand(ctx: &egui::Context) -> bool {
     ctx.input(|i| i.key_down(egui::Key::Space)) && !ctx.egui_wants_keyboard_input()
 }
 
-pub fn show(app: &mut EffectcraftApp, ui: &mut egui::Ui, p: PanelKind, rect: Rect) {
+pub fn show(app: &mut OracleMotionApp, ui: &mut egui::Ui, p: PanelKind, rect: Rect) {
     match p {
         PanelKind::Composition => viewers::show(app, ui, 0, rect),
         PanelKind::Viewer(n) => viewers::show(app, ui, n, rect),
@@ -211,7 +211,7 @@ pub fn show(app: &mut EffectcraftApp, ui: &mut egui::Ui, p: PanelKind, rect: Rec
 }
 
 /// The ≡ panel menu (opened from a tab).
-pub fn panel_menu_popup(app: &mut EffectcraftApp, ui: &mut egui::Ui) {
+pub fn panel_menu_popup(app: &mut OracleMotionApp, ui: &mut egui::Ui) {
     let id = egui::Id::new("panel-menu");
     let Some((panel, pos)) = ui.ctx().data(|d| d.get_temp::<(PanelKind, egui::Pos2)>(id)) else { return };
     // The menu opens in the window that shows the panel (a panel can have its own window).

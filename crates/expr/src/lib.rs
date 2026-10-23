@@ -3,7 +3,7 @@
 //! [`Expressions`] implements [`ExprHost`] so the renderer can evaluate property expressions:
 //!
 //! ```text
-//! let host = effectcraft_expr::Expressions;
+//! let host = oracle_motion_expr::Expressions;
 //! let mut r = Renderer::new(&project, &NoFootage, RenderOpts::default());
 //! r.expr = Some(&host);
 //! ```
@@ -35,10 +35,10 @@ pub mod rewrite;
 mod runtime;
 mod sample;
 
-use effectcraft_keyframe::Value;
-use effectcraft_project::{ItemId, Layer, LayerId, Project, Property};
-use effectcraft_render::{EvalCtx, ExprHost};
-use effectcraft_time::Tick;
+use oracle_motion_keyframe::Value;
+use oracle_motion_project::{ItemId, Layer, LayerId, Project, Property};
+use oracle_motion_render::{EvalCtx, ExprHost};
+use oracle_motion_time::Tick;
 
 use host::{Own, Req, Resolver, prop_dims, value_resp};
 use runtime::{Begin, FRAMES, Frame, Owner, RUNS, Run};

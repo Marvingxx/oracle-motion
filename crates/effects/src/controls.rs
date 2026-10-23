@@ -1,8 +1,8 @@
 //! Expression Controls: parameter-only effects whose values expressions read. They pass pixels
 //! through unchanged.
 
-use effectcraft_keyframe::Value;
-use effectcraft_project::ParamUi;
+use oracle_motion_keyframe::Value;
+use oracle_motion_project::ParamUi;
 
 use crate::{Buf, EffectCtx, EffectSpec, col, num, p, popup, slider};
 

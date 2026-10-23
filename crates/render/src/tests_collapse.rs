@@ -1,10 +1,10 @@
 //! Collapse Transformations, Continuously Rasterize and the Quality switch.
 
-use effectcraft_color::{BlendMode, Label};
-use effectcraft_keyframe::{TextDoc, Value};
-use effectcraft_project::build::{self, Ids};
-use effectcraft_project::{BitDepth, Comp, ItemId, ItemKind, Layer, LayerSource, Project, Quality, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::{BlendMode, Label};
+use oracle_motion_keyframe::{TextDoc, Value};
+use oracle_motion_project::build::{self, Ids};
+use oracle_motion_project::{BitDepth, Comp, ItemId, ItemKind, Layer, LayerSource, Project, Quality, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 
 use crate::{EvalCtx, Image, NoFootage, RenderOpts, Renderer, render_frame};
 
@@ -99,8 +99,8 @@ fn masks_on_a_collapsed_layer_force_a_flattened_render() {
     let mask = build::mask(
         &mut Ids(&mut next),
         "Mask 1",
-        effectcraft_keyframe::ShapePath::rect([50.0, 50.0], 4000.0, 4000.0),
-        effectcraft_project::MaskMode::Add,
+        oracle_motion_keyframe::ShapePath::rect([50.0, 50.0], 4000.0, 4000.0),
+        oracle_motion_project::MaskMode::Add,
         [255, 255, 0],
     );
     p.next_id = next;
@@ -317,8 +317,8 @@ fn effects_on_a_scaled_shape_follow_its_scale() {
         let rect = build::shape_rect(&mut ids, [size, size], [0.0, 0.0], 0.0);
         let fill = build::shape_fill(&mut ids, [1.0, 1.0, 1.0, 1.0]);
         let g = build::shape_group(&mut ids, "Rectangle 1", vec![rect, fill]);
-        let spec = effectcraft_effects::find("ec.blur.gaussian").unwrap();
-        let mut fx = effectcraft_effects::instantiate(spec, &mut ids, spec.name, [200.0, 200.0]);
+        let spec = oracle_motion_effects::find("ec.blur.gaussian").unwrap();
+        let mut fx = oracle_motion_effects::instantiate(spec, &mut ids, spec.name, [200.0, 200.0]);
         p.next_id = next;
         fx.prop_mut("blurriness").unwrap().value = Value::Scalar(blur);
         l.props.sub_mut("contents").unwrap().children.push(g.into());

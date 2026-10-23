@@ -1,7 +1,7 @@
 asset:        Layer Tools.jsx
-title:        EffectCraft sample script (Layer Tools)
-author:       EffectCraft contributors
+title:        Oracle Motion sample script (Layer Tools)
+author:       Oracle Motion contributors
 source:       original work
 license:      MIT OR Apache-2.0
-added:        2026-10-03 by EffectCraft contributors (M13.1)
-notes:        Written from scratch for EffectCraft against the documented scripting behaviour; not derived from any Adobe sample.
+added:        2026-10-03 by Oracle Motion contributors (M13.1)
+notes:        Written from scratch for Oracle Motion against the documented scripting behaviour; not derived from any Adobe sample.

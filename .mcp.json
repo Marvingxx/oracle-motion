@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "effectcraft": {
+    "oracle-motion": {
       "command": "cargo",
-      "args": ["run", "--quiet", "--release", "-p", "effectcraft-cli", "--", "mcp", "--demo"]
+      "args": ["run", "--quiet", "--release", "-p", "oracle-motion-cli", "--", "mcp", "--demo"]
     },
-    "effectcraft-app": {
+    "oracle-motion-app": {
       "command": "cargo",
-      "args": ["run", "--quiet", "--release", "-p", "effectcraft-cli", "--", "mcp", "--bridge", "9877"]
+      "args": ["run", "--quiet", "--release", "-p", "oracle-motion-cli", "--", "mcp", "--bridge", "9877"]
     }
   }
 }

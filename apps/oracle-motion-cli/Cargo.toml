@@ -1,0 +1,25 @@
+[package]
+name = "oracle-motion-cli"
+description = "Oracle Motion headless CLI: render frames and sequences, run commands, MCP server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "oracle-motion-cli"
+path = "src/main.rs"
+
+[dependencies]
+oracle-motion-engine = { workspace = true }
+oracle-motion-host = { workspace = true }
+oracle-motion-automation = { workspace = true }
+oracle-motion-ui-egui = { workspace = true }
+oracle-motion-render = { workspace = true }
+oracle-motion-gpu = { workspace = true }
+oracle-motion-time = { workspace = true }
+serde_json = { workspace = true }
+image = { workspace = true }
+cpu-time = "1"

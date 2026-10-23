@@ -1,10 +1,10 @@
 //! Sample positions through the public native WAV exporter, using a tiny recorded impulse.
-use effectcraft_export::render_queue::{AudioFormat, OutputFormat, OutputModule, RenderSettings};
-use effectcraft_export::{Job, JobOptions, Sink, export};
-use effectcraft_project::{Comp, Footage, FootageKind, ItemId, ItemKind, LayerSource, Project, build};
-use effectcraft_raster::Image;
-use effectcraft_render::FootageSource;
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_export::render_queue::{AudioFormat, OutputFormat, OutputModule, RenderSettings};
+use oracle_motion_export::{Job, JobOptions, Sink, export};
+use oracle_motion_project::{Comp, Footage, FootageKind, ItemId, ItemKind, LayerSource, Project, build};
+use oracle_motion_raster::Image;
+use oracle_motion_render::FootageSource;
+use oracle_motion_time::{FrameRate, Tick};
 use std::sync::{Arc, Mutex};
 
 struct Impulse {

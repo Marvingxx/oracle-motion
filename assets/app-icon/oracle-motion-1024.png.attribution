@@ -1,0 +1,8 @@
+asset:        oracle-motion-1024.png
+title:        Oracle Motion app icon, 1024 px
+author:       Oracle Motion contributors
+source:       original work
+license:      MIT OR Apache-2.0
+license-file: assets/app-icon/LICENSE.txt
+added:        2026-10-02 by Oracle Motion contributors (Claude agent, app icon)
+notes:        The Oracle app tile: a square in Oracle Motion's colour (#8a3ffc) with the Oracle star and the letters "Mo" (Archivo outlines, OFL-1.1), drawn by Oracle-suite/tools/make_app_icon.py. Canonical artwork: oracle-motion.svg; the other icon files derive from it.

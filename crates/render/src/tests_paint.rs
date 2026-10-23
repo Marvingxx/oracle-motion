@@ -1,12 +1,12 @@
 //! Paint and Puppet through the full pipeline: layer cache keys, resolution, determinism.
 
-use effectcraft_color::Label;
-use effectcraft_effects::paint::{self, StrokeSpec};
-use effectcraft_effects::puppet::{self, MeshOpts, PinKind};
-use effectcraft_keyframe::{Keyframe, Value};
-use effectcraft_project::build::{self, Ids};
-use effectcraft_project::{Comp, ItemId, ItemKind, LayerSource, Project, PropGroup, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::Label;
+use oracle_motion_effects::paint::{self, StrokeSpec};
+use oracle_motion_effects::puppet::{self, MeshOpts, PinKind};
+use oracle_motion_keyframe::{Keyframe, Value};
+use oracle_motion_project::build::{self, Ids};
+use oracle_motion_project::{Comp, ItemId, ItemKind, LayerSource, Project, PropGroup, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 
 use crate::{LayerCache, NoFootage, RenderOpts, Renderer};
 
@@ -25,7 +25,7 @@ fn scene(fx: impl FnOnce(&mut Ids) -> PropGroup) -> (Project, ItemId) {
 }
 
 fn paint_fx(ids: &mut Ids, strokes: &[StrokeSpec]) -> PropGroup {
-    let mut g = effectcraft_effects::instantiate(effectcraft_effects::find(paint::ID).unwrap(), ids, "Paint", [60.0, 40.0]);
+    let mut g = oracle_motion_effects::instantiate(oracle_motion_effects::find(paint::ID).unwrap(), ids, "Paint", [60.0, 40.0]);
     for (i, s) in strokes.iter().enumerate() {
         g.children.push(paint::stroke_group(ids, &format!("Brush {}", i + 1), s).into());
     }
@@ -86,7 +86,7 @@ fn paint_respects_resolution() {
 #[test]
 fn puppet_moves_pixels_and_caches() {
     let (mut p, cid) = scene(|ids| {
-        let mut fx = effectcraft_effects::instantiate(effectcraft_effects::find(puppet::ID).unwrap(), ids, "Puppet", [60.0, 40.0]);
+        let mut fx = oracle_motion_effects::instantiate(oracle_motion_effects::find(puppet::ID).unwrap(), ids, "Puppet", [60.0, 40.0]);
         let mut m = puppet::mesh_group(ids, "Mesh 1", [30.0, 20.0], &MeshOpts::default());
         let mut pin = puppet::pin_group(ids, "Puppet Pin 1", PinKind::Position, [30.0, 20.0]);
         pin.get_mut("position").unwrap().value = Value::Vec2([30.0, 20.0]);

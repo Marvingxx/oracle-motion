@@ -2,11 +2,11 @@
 //! shape's curvature radius it must still cover everything within the distance of the path,
 //! never leave a ring around an uncovered middle.
 
-use effectcraft_color::Label;
-use effectcraft_keyframe::{ShapePath, Value};
-use effectcraft_project::build::{self, Ids};
-use effectcraft_project::{Comp, ItemId, ItemKind, LayerSource, MaskMode, Node, Project, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::Label;
+use oracle_motion_keyframe::{ShapePath, Value};
+use oracle_motion_project::build::{self, Ids};
+use oracle_motion_project::{Comp, ItemId, ItemKind, LayerSource, MaskMode, Node, Project, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 
 use crate::{NoFootage, RenderOpts, Renderer};
 

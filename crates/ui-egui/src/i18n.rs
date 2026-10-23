@@ -1,15 +1,15 @@
-//! Menu labels for EffectCraft's own engine tree in each translated language. Commands remain
+//! Menu labels for Oracle Motion's own engine tree in each translated language. Commands remain
 //! locale-independent. A command plus its source label distinguishes parameterised entries (e.g.
 //! blend modes). Empty command keys identify submenus. Dynamic filenames, user names and effect
 //! plug-in names remain verbatim; these catalogs only translate the fixed menu tree.
 
-use crate::EffectcraftApp;
+use crate::OracleMotionApp;
 
 /// Effect names, keyed by effect id (#821).
 pub(crate) mod effects;
 /// Translations for the panels, tooltips and dialogs below the menu bar (see the module docs).
 mod ui;
-use effectcraft_engine::menus::{MenuEntry, MenuNode};
+use oracle_motion_engine::menus::{MenuEntry, MenuNode};
 pub(crate) use ui::{set_current, tr, tr_args};
 
 /// Every language with a catalog, in the order Settings ▸ General ▸ Language lists them.
@@ -17,7 +17,7 @@ const CATALOG_CODES: [&str; 10] = ["ja", "zh-hans", "zh-hant", "uk", "es", "pt-b
 
 /// The active interface language: the stored preference when it names a catalog, otherwise `en`
 /// (English is the source of every label and needs no lookup).
-pub(crate) fn language(app: &EffectcraftApp) -> &'static str {
+pub(crate) fn language(app: &OracleMotionApp) -> &'static str {
     match app.session.prefs.general.language.as_str() {
         "system" => system_language(),
         stored => code(stored),
@@ -30,42 +30,42 @@ fn code(stored: &str) -> &'static str {
 }
 
 /// The UI is in Japanese: the fast path for the menu builders.
-pub(crate) fn japanese(app: &EffectcraftApp) -> bool {
+pub(crate) fn japanese(app: &OracleMotionApp) -> bool {
     language(app) == "ja"
 }
 
 /// The UI is in Simplified Chinese.
-pub(crate) fn simplified(app: &EffectcraftApp) -> bool {
+pub(crate) fn simplified(app: &OracleMotionApp) -> bool {
     language(app) == "zh-hans"
 }
 
 /// The UI is in Traditional Chinese.
-pub(crate) fn traditional(app: &EffectcraftApp) -> bool {
+pub(crate) fn traditional(app: &OracleMotionApp) -> bool {
     language(app) == "zh-hant"
 }
 
 /// The UI is in Ukrainian.
-pub(crate) fn ukrainian(app: &EffectcraftApp) -> bool {
+pub(crate) fn ukrainian(app: &OracleMotionApp) -> bool {
     language(app) == "uk"
 }
 
 /// The UI is in Spanish.
-pub(crate) fn spanish(app: &EffectcraftApp) -> bool {
+pub(crate) fn spanish(app: &OracleMotionApp) -> bool {
     language(app) == "es"
 }
 
 /// The UI is in Brazilian Portuguese.
-pub(crate) fn brazilian_portuguese(app: &EffectcraftApp) -> bool {
+pub(crate) fn brazilian_portuguese(app: &OracleMotionApp) -> bool {
     language(app) == "pt-br"
 }
 
 /// The UI is in Czech.
-pub(crate) fn czech(app: &EffectcraftApp) -> bool {
+pub(crate) fn czech(app: &OracleMotionApp) -> bool {
     language(app) == "cs"
 }
 
 /// Settings ▸ General ▸ Language ▸ Match System: the operating system's interface language
-/// where EffectCraft has it, else English (#229), as After Effects installs in the system's
+/// where Oracle Motion has it, else English (#229), as After Effects installs in the system's
 /// language. The browser build stays in English because it has no system-locale probe.
 fn system_language() -> &'static str {
     #[cfg(not(target_arch = "wasm32"))]
@@ -78,7 +78,7 @@ fn system_language() -> &'static str {
     supported(None)
 }
 
-/// The language EffectCraft shows for a BCP 47 locale (`ja-JP` → `ja`, `zh-Hans-CN` → `zh-hans`,
+/// The language Oracle Motion shows for a BCP 47 locale (`ja-JP` → `ja`, `zh-Hans-CN` → `zh-hans`,
 /// `zh-TW` → `zh-hant`, `uk-UA` → `uk`, `es-ES` → `es`, `pt-BR` → `pt-br`, `cs-CZ` → `cs`).
 fn supported(locale: Option<&str>) -> &'static str {
     let Some(locale) = locale else { return "en" };
@@ -100,7 +100,7 @@ fn supported(locale: Option<&str>) -> &'static str {
     }
 }
 
-pub(crate) fn label<'a>(app: &EffectcraftApp, command: &str, source: &'a str) -> &'a str {
+pub(crate) fn label<'a>(app: &OracleMotionApp, command: &str, source: &'a str) -> &'a str {
     let language = language(app);
     // The engine names the platform's file manager before the catalog sees the label. These
     // two commands keep their ids, but on Windows/Linux their source is no longer "Finder".
@@ -171,7 +171,7 @@ pub(crate) fn context_item(command: &str, params: &serde_json::Value, source: &s
         .map_or_else(|| tr(source).to_string(), |(_, _, translated)| (*translated).to_string())
 }
 
-pub(crate) fn entry(app: &EffectcraftApp, e: &MenuEntry, shown: String) -> String {
+pub(crate) fn entry(app: &OracleMotionApp, e: &MenuEntry, shown: String) -> String {
     // The generated Effect menu's entries label themselves with the effect's registry name; the
     // catalog replaces it with the interface language's (#821). The entry keeps its command and
     // its `{"effect": <id>}` params, so a script, an expression or the control channel is
@@ -221,7 +221,7 @@ pub(crate) fn effect_category(children: &[MenuNode], source: &str) -> Option<Str
     (!children.is_empty() && children.iter().all(|c| matches!(c, MenuNode::Item(e) if e.command == "effect.apply"))).then(|| effects::category(source))
 }
 
-pub(crate) fn submenu(app: &EffectcraftApp, source: &str, shown: String) -> String {
+pub(crate) fn submenu(app: &OracleMotionApp, source: &str, shown: String) -> String {
     match language(app) {
         "cs" => {
             if source == "Assign Shortcut to Workspace" {
@@ -310,8 +310,8 @@ pub(crate) fn submenu(app: &EffectcraftApp, source: &str, shown: String) -> Stri
 /// Chinese After Effects documentation and the catalogs the sibling Craft apps ship; see the
 /// pull request for the rows taken from #321.
 const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "关于 EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "关于 Oracle Motion..."),
     ("", "Settings...", "设置..."),
     ("app.settings", "General...", "常规..."),
     ("app.settings", "Startup & Repair...", "启动和修复..."),
@@ -330,10 +330,10 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "视频..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "脚本和表达式..."),
-    ("app.hide", "Hide EffectCraft", "隐藏 EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "隐藏 Oracle Motion"),
     ("app.hideOthers", "Hide Others", "隐藏其他"),
     ("app.showAll", "Show All", "全部显示"),
-    ("app.quit", "Quit EffectCraft", "退出 EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "退出 Oracle Motion"),
     ("", "File", "文件"),
     ("", "New", "新建"),
     ("file.newProject", "New Project", "新建项目"),
@@ -356,7 +356,7 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "文件..."),
     ("file.importMultiple", "Multiple Files...", "多个文件..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Adobe Premiere Pro 项目..."),
-    ("file.importProject", "EffectCraft Project...", "EffectCraft 项目..."),
+    ("file.importProject", "Oracle Motion Project...", "Oracle Motion 项目..."),
     ("file.importPlaceholder", "Placeholder...", "占位符..."),
     ("file.importSolid", "Solid...", "纯色..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -484,6 +484,12 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Photoshop 图层..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "将帧复制到剪贴板"),
+    ("", "Send Frame To", "发送帧到"),
+    ("comp.frameToLibrary", "Oracle Library", "Oracle 资源库"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Oracle 资源库"),
     ("render.preRender", "Pre-render...", "预渲染..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "保存当前预览..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "在基本图形中打开"),
@@ -921,7 +927,7 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "从路径创建空对象"),
     ("window.panel", "VR Comp Editor", "VR 合成编辑器"),
     ("", "Help", "帮助"),
-    ("help.docs", "EffectCraft Help...", "EffectCraft 帮助..."),
+    ("help.docs", "Oracle Motion Help...", "Oracle Motion 帮助..."),
     ("help.docs", "Scripting Help...", "脚本帮助..."),
     ("help.docs", "Expression Reference...", "表达式引用..."),
     ("help.docs", "Effect Reference...", "效果参考..."),
@@ -932,11 +938,11 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "系统兼容性报告..."),
     ("help.enableLogging", "Enable Logging", "启用日志记录"),
     ("help.revealLogFile", "Reveal Logging File", "显示日志记录文件"),
-    ("help.discord", "Join the ArtCraft Discord...", "加入 ArtCraft 的 Discord 社区..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "提供反馈..."),
-    ("help.website", "ArtCraft Website", "ArtCraft 网站"),
-    ("help.appPage", "EffectCraft Home Page", "EffectCraft 主页"),
-    ("help.github", "EffectCraft on GitHub", "GitHub 上的 EffectCraft"),
+    ("help.website", "Oracle Website", "Oracle 网站"),
+    ("help.appPage", "Oracle Motion Home Page", "Oracle Motion 主页"),
+    ("help.github", "Oracle Motion on GitHub", "GitHub 上的 Oracle Motion"),
     ("file.openDemoProject", "Open Demo Project", "打开示例项目"),
 ];
 
@@ -944,8 +950,8 @@ const SIMPLIFIED_CHINESE: &[(&str, &str, &str)] = &[
 /// entry per fixed menu row of the engine's menu tree, mirroring `SIMPLIFIED_CHINESE` in the
 /// vocabulary the sibling Craft apps' zh-hant catalogs use.
 const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "關於 EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "關於 Oracle Motion..."),
     ("", "Settings...", "設定..."),
     ("app.settings", "General...", "一般..."),
     ("app.settings", "Startup & Repair...", "啟動和修復..."),
@@ -964,10 +970,10 @@ const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "視訊..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "指令碼和運算式..."),
-    ("app.hide", "Hide EffectCraft", "隱藏 EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "隱藏 Oracle Motion"),
     ("app.hideOthers", "Hide Others", "隱藏其他"),
     ("app.showAll", "Show All", "全部顯示"),
-    ("app.quit", "Quit EffectCraft", "結束 EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "結束 Oracle Motion"),
     ("", "File", "檔案"),
     ("", "New", "新增"),
     ("file.newProject", "New Project", "新增專案"),
@@ -990,7 +996,7 @@ const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "檔案..."),
     ("file.importMultiple", "Multiple Files...", "多個檔案..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Adobe Premiere Pro 專案..."),
-    ("file.importProject", "EffectCraft Project...", "EffectCraft 專案..."),
+    ("file.importProject", "Oracle Motion Project...", "Oracle Motion 專案..."),
     ("file.importPlaceholder", "Placeholder...", "預留位置..."),
     ("file.importSolid", "Solid...", "純色..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -1118,6 +1124,12 @@ const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Photoshop 圖層..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "將影格拷貝到剪貼簿"),
+    ("", "Send Frame To", "傳送影格到"),
+    ("comp.frameToLibrary", "Oracle Library", "Oracle 資源庫"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Oracle 資源庫"),
     ("render.preRender", "Pre-render...", "預先渲染..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "儲存目前預覽..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "在基本圖形中開啟"),
@@ -1555,7 +1567,7 @@ const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "從路徑建立空物件"),
     ("window.panel", "VR Comp Editor", "VR 合成編輯器"),
     ("", "Help", "說明"),
-    ("help.docs", "EffectCraft Help...", "EffectCraft 說明..."),
+    ("help.docs", "Oracle Motion Help...", "Oracle Motion 說明..."),
     ("help.docs", "Scripting Help...", "指令碼說明..."),
     ("help.docs", "Expression Reference...", "運算式參考..."),
     ("help.docs", "Effect Reference...", "效果參考..."),
@@ -1566,17 +1578,17 @@ const TRADITIONAL_CHINESE: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "系統相容性報告..."),
     ("help.enableLogging", "Enable Logging", "啟用日誌記錄"),
     ("help.revealLogFile", "Reveal Logging File", "顯示日誌檔案"),
-    ("help.discord", "Join the ArtCraft Discord...", "加入 ArtCraft 的 Discord 社群..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "提供意見..."),
-    ("help.website", "ArtCraft Website", "ArtCraft 網站"),
-    ("help.appPage", "EffectCraft Home Page", "EffectCraft 首頁"),
-    ("help.github", "EffectCraft on GitHub", "GitHub 上的 EffectCraft"),
+    ("help.website", "Oracle Website", "Oracle 網站"),
+    ("help.appPage", "Oracle Motion Home Page", "Oracle Motion 首頁"),
+    ("help.github", "Oracle Motion on GitHub", "GitHub 上的 Oracle Motion"),
     ("file.openDemoProject", "Open Demo Project", "開啟範例專案"),
 ];
 
 const JAPANESE: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "EffectCraftについて..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "Oracle Motionについて..."),
     ("", "Settings...", "設定..."),
     ("app.settings", "General...", "一般..."),
     ("app.settings", "Startup & Repair...", "起動と修復..."),
@@ -1595,10 +1607,10 @@ const JAPANESE: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "ビデオ..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "スクリプトとエクスプレッション..."),
-    ("app.hide", "Hide EffectCraft", "EffectCraftを隠す"),
+    ("app.hide", "Hide Oracle Motion", "Oracle Motionを隠す"),
     ("app.hideOthers", "Hide Others", "ほかを隠す"),
     ("app.showAll", "Show All", "すべてを表示"),
-    ("app.quit", "Quit EffectCraft", "EffectCraftを終了"),
+    ("app.quit", "Quit Oracle Motion", "Oracle Motionを終了"),
     ("", "File", "ファイル"),
     ("", "New", "新規"),
     ("file.newProject", "New Project", "新規プロジェクト"),
@@ -1624,7 +1636,7 @@ const JAPANESE: &[(&str, &str, &str)] = &[
     ("file.importPlaceholder", "Placeholder...", "プレースホルダー..."),
     ("file.importSolid", "Solid...", "平面..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
-    ("file.importProject", "EffectCraft Project...", "EffectCraftプロジェクト..."),
+    ("file.importProject", "Oracle Motion Project...", "Oracle Motionプロジェクト..."),
     ("file.importVanishingPoint", "Vanishing Point (.vpe)...", "Vanishing Point (.vpe)..."),
     ("essential.importTemplate", "Essential Graphics Template...", "エッセンシャルグラフィックステンプレート..."),
     ("", "Import Recent Footage", "最近使用したフッテージを読み込み"),
@@ -1749,6 +1761,12 @@ const JAPANESE: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Photoshopレイヤー..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "フレームをクリップボードにコピー"),
+    ("", "Send Frame To", "フレームを送る"),
+    ("comp.frameToLibrary", "Oracle Library", "Oracle ライブラリ"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Oracle ライブラリ"),
     ("render.preRender", "Pre-render...", "プリレンダリング..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "現在のプレビューを保存..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "エッセンシャルグラフィックスで開く"),
@@ -2186,7 +2204,7 @@ const JAPANESE: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "パスからヌルを作成"),
     ("window.panel", "VR Comp Editor", "VRコンポジションエディター"),
     ("", "Help", "ヘルプ"),
-    ("help.docs", "EffectCraft Help...", "EffectCraftヘルプ..."),
+    ("help.docs", "Oracle Motion Help...", "Oracle Motionヘルプ..."),
     ("help.docs", "Scripting Help...", "スクリプトヘルプ..."),
     ("help.docs", "Expression Reference...", "エクスプレッションリファレンス..."),
     ("help.docs", "Effect Reference...", "エフェクトリファレンス..."),
@@ -2197,11 +2215,11 @@ const JAPANESE: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "システム互換性レポート..."),
     ("help.enableLogging", "Enable Logging", "ログ記録を有効化"),
     ("help.revealLogFile", "Reveal Logging File", "ログファイルを表示"),
-    ("help.discord", "Join the ArtCraft Discord...", "ArtCraft Discordに参加..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "フィードバックを送信..."),
-    ("help.website", "ArtCraft Website", "ArtCraftウェブサイト"),
-    ("help.appPage", "EffectCraft Home Page", "EffectCraftホームページ"),
-    ("help.github", "EffectCraft on GitHub", "GitHubのEffectCraft"),
+    ("help.website", "Oracle Website", "Oracleウェブサイト"),
+    ("help.appPage", "Oracle Motion Home Page", "Oracle Motionホームページ"),
+    ("help.github", "Oracle Motion on GitHub", "GitHubのOracle Motion"),
     ("file.openDemoProject", "Open Demo Project", "デモプロジェクトを開く"),
 ];
 
@@ -2209,8 +2227,8 @@ const JAPANESE: &[(&str, &str, &str)] = &[
 /// Ukrainian motion-graphics vocabulary. Product names and technical identifiers stay verbatim.
 /// The (command, source) keys match the other catalogs; no proprietary localization was used.
 const UKRAINIAN: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "Про EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "Про Oracle Motion..."),
     ("", "Settings...", "Налаштування..."),
     ("app.settings", "General...", "Загальні..."),
     ("app.settings", "Startup & Repair...", "Запуск і відновлення..."),
@@ -2229,10 +2247,10 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Відео..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Скрипти та вирази..."),
-    ("app.hide", "Hide EffectCraft", "Приховати EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Приховати Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Приховати решту"),
     ("app.showAll", "Show All", "Показати все"),
-    ("app.quit", "Quit EffectCraft", "Вийти з EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Вийти з Oracle Motion"),
     ("", "File", "Файл"),
     ("", "New", "Створити"),
     ("file.newProject", "New Project", "Новий проєкт"),
@@ -2255,7 +2273,7 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Файл..."),
     ("file.importMultiple", "Multiple Files...", "Кілька файлів..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Проєкт Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Проєкт EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Проєкт Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Заповнювач..."),
     ("file.importSolid", "Solid...", "Суцільний колір..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -2383,6 +2401,12 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Шари Photoshop..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "Копіювати кадр у буфер обміну"),
+    ("", "Send Frame To", "Надіслати кадр до"),
+    ("comp.frameToLibrary", "Oracle Library", "Бібліотека Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Бібліотека Oracle"),
     ("render.preRender", "Pre-render...", "Попередній рендеринг..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "Зберегти поточний попередній перегляд..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "Відкрити в основній графіці"),
@@ -2820,7 +2844,7 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Створення нульових об’єктів із контурів"),
     ("window.panel", "VR Comp Editor", "Редактор композицій VR"),
     ("", "Help", "Довідка"),
-    ("help.docs", "EffectCraft Help...", "Довідка EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Довідка Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Довідка зі скриптів..."),
     ("help.docs", "Expression Reference...", "Довідник виразів..."),
     ("help.docs", "Effect Reference...", "Довідник ефектів..."),
@@ -2831,11 +2855,11 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Звіт про сумісність системи..."),
     ("help.enableLogging", "Enable Logging", "Увімкнути журналювання"),
     ("help.revealLogFile", "Reveal Logging File", "Показати файл журналу"),
-    ("help.discord", "Join the ArtCraft Discord...", "Приєднатися до Discord ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Надіслати відгук..."),
-    ("help.website", "ArtCraft Website", "Вебсайт ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Домашня сторінка EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft на GitHub"),
+    ("help.website", "Oracle Website", "Вебсайт Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Домашня сторінка Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion на GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Відкрити демонстраційний проєкт"),
 ];
 
@@ -2844,8 +2868,8 @@ const UKRAINIAN: &[(&str, &str, &str)] = &[
 /// Wording follows Adobe's Spanish After Effects documentation (helpx.adobe.com/es) where it
 /// names the feature, and macOS Spanish for the app menu.
 const SPANISH: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "Acerca de EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "Acerca de Oracle Motion..."),
     ("", "Settings...", "Ajustes..."),
     ("app.settings", "General...", "General..."),
     ("app.settings", "Startup & Repair...", "Inicio y reparación..."),
@@ -2864,10 +2888,10 @@ const SPANISH: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Vídeo..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Scripts y expresiones..."),
-    ("app.hide", "Hide EffectCraft", "Ocultar EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Ocultar Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Ocultar otros"),
     ("app.showAll", "Show All", "Mostrar todo"),
-    ("app.quit", "Quit EffectCraft", "Salir de EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Salir de Oracle Motion"),
     ("", "File", "Archivo"),
     ("", "New", "Nuevo"),
     ("file.newProject", "New Project", "Nuevo proyecto"),
@@ -2890,7 +2914,7 @@ const SPANISH: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Archivo..."),
     ("file.importMultiple", "Multiple Files...", "Varios archivos..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Proyecto de Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Proyecto de EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Proyecto de Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Marcador de posición..."),
     ("file.importSolid", "Solid...", "Sólido..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -3018,6 +3042,12 @@ const SPANISH: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Capas de Photoshop..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "Copiar fotograma al portapapeles"),
+    ("", "Send Frame To", "Enviar fotograma a"),
+    ("comp.frameToLibrary", "Oracle Library", "Biblioteca Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Biblioteca Oracle"),
     ("render.preRender", "Pre-render...", "Preprocesar..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "Guardar la previsualización actual..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "Abrir en Gráficos esenciales"),
@@ -3455,7 +3485,7 @@ const SPANISH: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Crear nulos a partir de trazados"),
     ("window.panel", "VR Comp Editor", "Editor de composición de RV"),
     ("", "Help", "Ayuda"),
-    ("help.docs", "EffectCraft Help...", "Ayuda de EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Ayuda de Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Ayuda de scripts..."),
     ("help.docs", "Expression Reference...", "Referencia de expresiones..."),
     ("help.docs", "Effect Reference...", "Referencia de efectos..."),
@@ -3466,19 +3496,19 @@ const SPANISH: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Informe de compatibilidad del sistema..."),
     ("help.enableLogging", "Enable Logging", "Habilitar registro"),
     ("help.revealLogFile", "Reveal Logging File", "Mostrar archivo de registro"),
-    ("help.discord", "Join the ArtCraft Discord...", "Unirse al Discord de ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Enviar comentarios..."),
-    ("help.website", "ArtCraft Website", "Sitio web de ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Página de inicio de EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft en GitHub"),
+    ("help.website", "Oracle Website", "Sitio web de Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Página de inicio de Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion en GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Abrir proyecto de demostración"),
 ];
 
 /// Brazilian Portuguese: the same (command, English label) keys as `JAPANESE`, one entry
 /// per fixed menu row of the engine's menu tree.
 const PORTUGUESE: &[(&str, &str, &str)] = &[
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "Sobre o EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "Sobre o Oracle Motion..."),
     ("", "Settings...", "Configurações..."),
     ("app.settings", "General...", "Geral..."),
     ("app.settings", "Startup & Repair...", "Inicialização e reparo..."),
@@ -3497,10 +3527,10 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Vídeo..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Scripts e expressões..."),
-    ("app.hide", "Hide EffectCraft", "Ocultar EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Ocultar Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Ocultar outros"),
     ("app.showAll", "Show All", "Mostrar tudo"),
-    ("app.quit", "Quit EffectCraft", "Sair do EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Sair do Oracle Motion"),
     ("", "File", "Arquivo"),
     ("", "New", "Novo"),
     ("file.newProject", "New Project", "Novo projeto"),
@@ -3523,7 +3553,7 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Arquivo..."),
     ("file.importMultiple", "Multiple Files...", "Vários arquivos..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Projeto do Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Projeto do EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Projeto do Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Espaço reservado..."),
     ("file.importSolid", "Solid...", "Sólido..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -3651,6 +3681,12 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Camadas do Photoshop..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "Copiar quadro para a área de transferência"),
+    ("", "Send Frame To", "Enviar quadro para"),
+    ("comp.frameToLibrary", "Oracle Library", "Biblioteca Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Biblioteca Oracle"),
     ("render.preRender", "Pre-render...", "Pré-renderização..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "Salvar pré-visualização atual..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "Abrir em Gráficos essenciais"),
@@ -4088,7 +4124,7 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Criar nulls a partir de caminhos"),
     ("window.panel", "VR Comp Editor", "Editor de composição VR"),
     ("", "Help", "Ajuda"),
-    ("help.docs", "EffectCraft Help...", "Ajuda do EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Ajuda do Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Ajuda de scripting..."),
     ("help.docs", "Expression Reference...", "Referência de expressões..."),
     ("help.docs", "Effect Reference...", "Referência de efeitos..."),
@@ -4099,11 +4135,11 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Relatório de compatibilidade do sistema..."),
     ("help.enableLogging", "Enable Logging", "Ativar registro em log"),
     ("help.revealLogFile", "Reveal Logging File", "Revelar arquivo de log"),
-    ("help.discord", "Join the ArtCraft Discord...", "Entrar no Discord do ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Enviar comentários..."),
-    ("help.website", "ArtCraft Website", "Site do ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Página inicial do EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft no GitHub"),
+    ("help.website", "Oracle Website", "Site do Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Página inicial do Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion no GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Abrir projeto de demonstração"),
 ];
 
@@ -4113,13 +4149,19 @@ const PORTUGUESE: &[(&str, &str, &str)] = &[
 /// entry per fixed menu entry, in the same order.
 const RUSSIAN: &[(&str, &str, &str)] = &[
     ("comp.copyFrame", "Copy Frame to Clipboard", "Копировать кадр в буфер обмена"),
+    ("", "Send Frame To", "Отправить кадр в"),
+    ("comp.frameToLibrary", "Oracle Library", "Библиотека Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Библиотека Oracle"),
     ("", "Front", "Передняя грань"),
     ("", "Bevel", "Фаска"),
     ("", "Side", "Боковая грань"),
     ("", "Back", "Задняя грань"),
     ("layer.addTextAnimator", "Color", "Цвет"),
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "О EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "О Oracle Motion..."),
     ("", "Settings...", "Настройки..."),
     ("app.settings", "General...", "Общие..."),
     ("app.settings", "Startup & Repair...", "Запуск и восстановление..."),
@@ -4138,10 +4180,10 @@ const RUSSIAN: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Видео..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Скрипты и выражения..."),
-    ("app.hide", "Hide EffectCraft", "Скрыть EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Скрыть Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Скрыть остальные"),
     ("app.showAll", "Show All", "Показать все"),
-    ("app.quit", "Quit EffectCraft", "Выйти из EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Выйти из Oracle Motion"),
     ("", "File", "Файл"),
     ("", "New", "Создать"),
     ("file.newProject", "New Project", "Новый проект"),
@@ -4164,7 +4206,7 @@ const RUSSIAN: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Файл..."),
     ("file.importMultiple", "Multiple Files...", "Несколько файлов..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Проект Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Проект EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Проект Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Заполнитель..."),
     ("file.importSolid", "Solid...", "Сплошной цвет..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -4723,7 +4765,7 @@ const RUSSIAN: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Создание нулевых объектов из контуров"),
     ("window.panel", "VR Comp Editor", "Редактор VR-композиций"),
     ("", "Help", "Справка"),
-    ("help.docs", "EffectCraft Help...", "Справка EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Справка Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Справка по скриптам..."),
     ("help.docs", "Expression Reference...", "Справочник по выражениям..."),
     ("help.docs", "Effect Reference...", "Справочник по эффектам..."),
@@ -4734,11 +4776,11 @@ const RUSSIAN: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Отчет о совместимости системы..."),
     ("help.enableLogging", "Enable Logging", "Включить ведение журнала"),
     ("help.revealLogFile", "Reveal Logging File", "Показать файл журнала"),
-    ("help.discord", "Join the ArtCraft Discord...", "Присоединяйтесь к Discord ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Оставить отзыв..."),
-    ("help.website", "ArtCraft Website", "Сайт ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Главная страница EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft на GitHub"),
+    ("help.website", "Oracle Website", "Сайт Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Главная страница Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion на GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Открыть демонстрационный проект"),
 ];
 
@@ -4746,13 +4788,19 @@ const RUSSIAN: &[(&str, &str, &str)] = &[
 /// entry per fixed menu entry, in the same order.
 const FRENCH: &[(&str, &str, &str)] = &[
     ("comp.copyFrame", "Copy Frame to Clipboard", "Copier l'image dans le presse-papiers"),
+    ("", "Send Frame To", "Envoyer l'image vers"),
+    ("comp.frameToLibrary", "Oracle Library", "Bibliothèque Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Bibliothèque Oracle"),
     ("", "Front", "Avant"),
     ("", "Bevel", "Biseau"),
     ("", "Side", "Côté"),
     ("", "Back", "Arrière"),
     ("layer.addTextAnimator", "Color", "Couleur"),
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "À propos d’EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "À propos d’Oracle Motion..."),
     ("", "Settings...", "Préférences..."),
     ("app.settings", "General...", "Général..."),
     ("app.settings", "Startup & Repair...", "Démarrage et réparation..."),
@@ -4771,10 +4819,10 @@ const FRENCH: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Vidéo..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Scripts et expressions..."),
-    ("app.hide", "Hide EffectCraft", "Masquer EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Masquer Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Masquer les autres"),
     ("app.showAll", "Show All", "Tout afficher"),
-    ("app.quit", "Quit EffectCraft", "Quitter EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Quitter Oracle Motion"),
     ("", "File", "Fichier"),
     ("", "New", "Nouveau"),
     ("file.newProject", "New Project", "Nouveau projet"),
@@ -4797,7 +4845,7 @@ const FRENCH: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Fichier..."),
     ("file.importMultiple", "Multiple Files...", "Plusieurs fichiers..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Projet Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Projet EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Projet Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Espace réservé..."),
     ("file.importSolid", "Solid...", "Solide..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -5356,7 +5404,7 @@ const FRENCH: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Créer des nuls à partir des tracés"),
     ("window.panel", "VR Comp Editor", "Éditeur de composition VR"),
     ("", "Help", "Aide"),
-    ("help.docs", "EffectCraft Help...", "Aide EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Aide Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Aide sur les scripts..."),
     ("help.docs", "Expression Reference...", "Référence des expressions..."),
     ("help.docs", "Effect Reference...", "Référence des effets..."),
@@ -5367,11 +5415,11 @@ const FRENCH: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Rapport de compatibilité du système..."),
     ("help.enableLogging", "Enable Logging", "Activer la journalisation"),
     ("help.revealLogFile", "Reveal Logging File", "Révéler le fichier journal"),
-    ("help.discord", "Join the ArtCraft Discord...", "Rejoindre le Discord ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Envoyer des commentaires..."),
-    ("help.website", "ArtCraft Website", "Site web ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Page d’accueil EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft sur GitHub"),
+    ("help.website", "Oracle Website", "Site web Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Page d’accueil Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion sur GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Ouvrir le projet de démonstration"),
 ];
 
@@ -5379,13 +5427,19 @@ const FRENCH: &[(&str, &str, &str)] = &[
 /// entry per fixed menu entry, in the same order.
 const GERMAN: &[(&str, &str, &str)] = &[
     ("comp.copyFrame", "Copy Frame to Clipboard", "Frame in die Zwischenablage kopieren"),
+    ("", "Send Frame To", "Frame senden an"),
+    ("comp.frameToLibrary", "Oracle Library", "Oracle-Bibliothek"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Oracle-Bibliothek"),
     ("", "Front", "Vorderseite"),
     ("", "Bevel", "Abschrägung"),
     ("", "Side", "Seite"),
     ("", "Back", "Rückseite"),
     ("layer.addTextAnimator", "Color", "Farbe"),
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "Über EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "Über Oracle Motion..."),
     ("", "Settings...", "Voreinstellungen..."),
     ("app.settings", "General...", "Allgemein..."),
     ("app.settings", "Startup & Repair...", "Start und Reparatur..."),
@@ -5404,10 +5458,10 @@ const GERMAN: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Video..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Skripting und Ausdrücke..."),
-    ("app.hide", "Hide EffectCraft", "EffectCraft ausblenden"),
+    ("app.hide", "Hide Oracle Motion", "Oracle Motion ausblenden"),
     ("app.hideOthers", "Hide Others", "Andere ausblenden"),
     ("app.showAll", "Show All", "Alle einblenden"),
-    ("app.quit", "Quit EffectCraft", "EffectCraft beenden"),
+    ("app.quit", "Quit Oracle Motion", "Oracle Motion beenden"),
     ("", "File", "Datei"),
     ("", "New", "Neu"),
     ("file.newProject", "New Project", "Neues Projekt"),
@@ -5430,7 +5484,7 @@ const GERMAN: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Datei..."),
     ("file.importMultiple", "Multiple Files...", "Mehrere Dateien..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Adobe Premiere Pro-Projekt..."),
-    ("file.importProject", "EffectCraft Project...", "EffectCraft-Projekt..."),
+    ("file.importProject", "Oracle Motion Project...", "Oracle Motion-Projekt..."),
     ("file.importPlaceholder", "Placeholder...", "Platzhalter..."),
     ("file.importSolid", "Solid...", "Farbfläche..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -5989,7 +6043,7 @@ const GERMAN: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Null-Objekte aus Pfaden erstellen"),
     ("window.panel", "VR Comp Editor", "VR-Kompositionseditor"),
     ("", "Help", "Hilfe"),
-    ("help.docs", "EffectCraft Help...", "EffectCraft-Hilfe..."),
+    ("help.docs", "Oracle Motion Help...", "Oracle Motion-Hilfe..."),
     ("help.docs", "Scripting Help...", "Hilfe zu Skripts..."),
     ("help.docs", "Expression Reference...", "Ausdrucksreferenz..."),
     ("help.docs", "Effect Reference...", "Effektreferenz..."),
@@ -6000,11 +6054,11 @@ const GERMAN: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Bericht zur Systemkompatibilität..."),
     ("help.enableLogging", "Enable Logging", "Protokollierung aktivieren"),
     ("help.revealLogFile", "Reveal Logging File", "Protokolldatei anzeigen"),
-    ("help.discord", "Join the ArtCraft Discord...", "ArtCraft-Discord beitreten..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Feedback senden..."),
-    ("help.website", "ArtCraft Website", "ArtCraft-Website"),
-    ("help.appPage", "EffectCraft Home Page", "EffectCraft-Startseite"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft auf GitHub"),
+    ("help.website", "Oracle Website", "Oracle-Website"),
+    ("help.appPage", "Oracle Motion Home Page", "Oracle Motion-Startseite"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion auf GitHub"),
     ("file.openDemoProject", "Open Demo Project", "Demoprojekt öffnen"),
 ];
 
@@ -6017,8 +6071,8 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("", "Side", "Boční strana"),
     ("", "Back", "Zadní strana"),
     ("layer.addTextAnimator", "Color", "Barva"),
-    ("", "EffectCraft", "EffectCraft"),
-    ("app.about", "About EffectCraft...", "O aplikaci EffectCraft..."),
+    ("", "Oracle Motion", "Oracle Motion"),
+    ("app.about", "About Oracle Motion...", "O aplikaci Oracle Motion..."),
     ("", "Settings...", "Nastavení..."),
     ("app.settings", "General...", "Obecné..."),
     ("app.settings", "Startup & Repair...", "Spuštění a oprava..."),
@@ -6037,10 +6091,10 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("app.settings", "Video...", "Video..."),
     ("app.settings", "3D...", "3D..."),
     ("app.settings", "Scripting & Expressions...", "Skripty a výrazy..."),
-    ("app.hide", "Hide EffectCraft", "Skrýt EffectCraft"),
+    ("app.hide", "Hide Oracle Motion", "Skrýt Oracle Motion"),
     ("app.hideOthers", "Hide Others", "Skrýt ostatní"),
     ("app.showAll", "Show All", "Zobrazit vše"),
-    ("app.quit", "Quit EffectCraft", "Ukončit EffectCraft"),
+    ("app.quit", "Quit Oracle Motion", "Ukončit Oracle Motion"),
     ("", "File", "Soubor"),
     ("", "New", "Nový"),
     ("file.newProject", "New Project", "Nový projekt"),
@@ -6063,7 +6117,7 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("file.import", "File...", "Soubor..."),
     ("file.importMultiple", "Multiple Files...", "Více souborů..."),
     ("file.importTimeline", "Adobe Premiere Pro Project...", "Projekt Adobe Premiere Pro..."),
-    ("file.importProject", "EffectCraft Project...", "Projekt EffectCraft..."),
+    ("file.importProject", "Oracle Motion Project...", "Projekt Oracle Motion..."),
     ("file.importPlaceholder", "Placeholder...", "Zástupný záznam..."),
     ("file.importSolid", "Solid...", "Plná vrstva..."),
     ("file.importLottie", "Lottie...", "Lottie..."),
@@ -6191,6 +6245,12 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("comp.saveFrameAsPsd", "Photoshop Layers...", "Vrstvy Photoshopu..."),
     ("comp.saveFrameAsExr", "ProEXR...", "ProEXR..."),
     ("comp.copyFrame", "Copy Frame to Clipboard", "Kopírovat snímek do schránky"),
+    ("", "Send Frame To", "Odeslat snímek do"),
+    ("comp.frameToLibrary", "Oracle Library", "Knihovna Oracle"),
+    ("comp.sendFrameToEdit", "Oracle Edit", "Oracle Edit"),
+    ("comp.sendFrameToVector", "Oracle Vector", "Oracle Vector"),
+    ("comp.sendFrameToGuide", "Oracle Brand Guide", "Oracle Brand Guide"),
+    ("window.oracleLibrary", "Oracle Library", "Knihovna Oracle"),
     ("render.preRender", "Pre-render...", "Předvykreslit..."),
     ("render.saveCurrentPreview", "Save Current Preview...", "Uložit aktuální náhled..."),
     ("comp.openInEssentialGraphics", "Open in Essential Graphics", "Otevřít v základní grafice"),
@@ -6623,7 +6683,7 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("window.panel", "Create Nulls From Paths", "Vytvořit prázdné objekty z cest"),
     ("window.panel", "VR Comp Editor", "Editor kompozice VR"),
     ("", "Help", "Nápověda"),
-    ("help.docs", "EffectCraft Help...", "Nápověda k EffectCraft..."),
+    ("help.docs", "Oracle Motion Help...", "Nápověda k Oracle Motion..."),
     ("help.docs", "Scripting Help...", "Nápověda ke skriptování..."),
     ("help.docs", "Expression Reference...", "Referenční příručka výrazů..."),
     ("help.docs", "Effect Reference...", "Referenční příručka efektů..."),
@@ -6634,24 +6694,24 @@ const CZECH: &[(&str, &str, &str)] = &[
     ("help.systemReport", "System Compatibility Report...", "Zpráva o kompatibilitě systému..."),
     ("help.enableLogging", "Enable Logging", "Povolit protokolování"),
     ("help.revealLogFile", "Reveal Logging File", "Zobrazit soubor protokolu"),
-    ("help.discord", "Join the ArtCraft Discord...", "Připojit se na Discord ArtCraft..."),
+    ("help.discord", "Oracle Suite...", "Oracle Suite..."),
     ("help.reportIssue", "Provide Feedback...", "Poskytnout zpětnou vazbu..."),
-    ("help.website", "ArtCraft Website", "Web ArtCraft"),
-    ("help.appPage", "EffectCraft Home Page", "Domovská stránka EffectCraft"),
-    ("help.github", "EffectCraft on GitHub", "EffectCraft na GitHubu"),
+    ("help.website", "Oracle Website", "Web Oracle"),
+    ("help.appPage", "Oracle Motion Home Page", "Domovská stránka Oracle Motion"),
+    ("help.github", "Oracle Motion on GitHub", "Oracle Motion na GitHubu"),
     ("file.openDemoProject", "Open Demo Project", "Otevřít ukázkový projekt"),
 ];
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use effectcraft_engine::menus::{MenuNode, TREE, parse};
+    use oracle_motion_engine::menus::{MenuNode, TREE, parse};
     use serde_json::json;
     use std::collections::BTreeSet;
 
     #[test]
     fn czech_translates_menus_without_changing_bindings_or_user_names() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "en"})).unwrap();
         app.session.prefs.push_recent("File.ecproj");
         let en = crate::native_menu::build(&app);
@@ -6699,7 +6759,7 @@ mod tests {
 
     #[test]
     fn czech_undo_redo_keeps_history_labels_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "cs"})).unwrap();
         let undo = MenuEntry { label: "Undo".into(), command: "edit.undo".into(), params: json!({}), shortcut: None, alt_shortcuts: vec![] };
         let redo = MenuEntry { label: "Redo".into(), command: "edit.redo".into(), params: json!({}), shortcut: None, alt_shortcuts: vec![] };
@@ -6716,7 +6776,7 @@ mod tests {
         // As `czech_…` and `ukrainian_…` do. Asserted through `label`, not `entry`: `entry`
         // returns the English for German, Russian and French, which have catalogues but are
         // not wired into the menus (see the undo/redo match in `entry` and `supported`).
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "de"})).unwrap();
         for command in ["file.revealInFinder", "layer.revealInFinder"] {
             for (source, translated) in [
@@ -6734,7 +6794,7 @@ mod tests {
 
     #[test]
     fn german_menu_labels_name_what_their_command_does() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "de"})).unwrap();
         // "Ebenenreihenfolge umkehren" reads as reversing the stacking order, not time, and
         // "Formate" are formats, not layer styles (#1443).
@@ -6766,7 +6826,7 @@ mod tests {
 
     #[test]
     fn czech_reveal_labels_follow_the_platform_file_manager() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "cs"})).unwrap();
         for command in ["file.revealInFinder", "layer.revealInFinder"] {
             for (source, translated) in [
@@ -6861,7 +6921,7 @@ mod tests {
     /// Windows/Linux catalog miss, while filenames and unrelated commands stay untouched.
     #[test]
     fn ukrainian_reveal_labels_follow_the_platform_file_manager() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key": "general.language", "value": "uk"})).unwrap();
         for command in ["file.revealInFinder", "layer.revealInFinder"] {
             for (source, translated) in [
@@ -6884,7 +6944,7 @@ mod tests {
 
     #[test]
     fn language_changes_native_labels_without_changing_commands_or_parameters() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"en"})).unwrap();
         let en = crate::native_menu::build(&app);
         let state = crate::native_menu::state_key(&app);
@@ -6948,7 +7008,7 @@ mod tests {
         ] {
             assert_eq!(supported(locale), language, "{locale:?}");
         }
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         assert_eq!(app.session.prefs.general.language, "system", "the default");
         assert_eq!(japanese(&app), system_language() == "ja");
         assert_eq!(simplified(&app), system_language() == "zh-hans");
@@ -6988,7 +7048,7 @@ mod tests {
 
     #[test]
     fn zh_hans_translates_labels_computed_titles_and_keeps_names_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"zh-hans"})).unwrap();
         assert_eq!(language(&app), "zh-hans");
         assert!(simplified(&app));
@@ -7032,7 +7092,7 @@ mod tests {
 
     #[test]
     fn zh_hant_translates_labels_computed_titles_and_keeps_names_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"zh-hant"})).unwrap();
         assert_eq!(language(&app), "zh-hant");
         assert!(traditional(&app));
@@ -7076,7 +7136,7 @@ mod tests {
 
     #[test]
     fn ukrainian_translates_menus_without_changing_bindings_or_user_names() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"en"})).unwrap();
         app.session.prefs.push_recent("/tmp/File.ecproj");
         let en = crate::native_menu::build(&app);
@@ -7113,7 +7173,7 @@ mod tests {
 
     #[test]
     fn ukrainian_undo_redo_keeps_history_labels_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"uk"})).unwrap();
         let undo = MenuEntry { label: "Undo".into(), command: "edit.undo".into(), params: json!({}), shortcut: None, alt_shortcuts: vec![] };
         let redo = MenuEntry { label: "Redo".into(), command: "edit.redo".into(), params: json!({}), shortcut: None, alt_shortcuts: vec![] };
@@ -7127,16 +7187,16 @@ mod tests {
 
     #[test]
     fn ukrainian_catalog_matches_the_settings_registry() {
-        let codes: Vec<_> = effectcraft_engine::prefs::LANGUAGES.iter().map(|(_, code)| *code).filter(|code| !matches!(*code, "system" | "en")).collect();
+        let codes: Vec<_> = oracle_motion_engine::prefs::LANGUAGES.iter().map(|(_, code)| *code).filter(|code| !matches!(*code, "system" | "en")).collect();
         assert_eq!(codes, CATALOG_CODES);
-        assert!(effectcraft_engine::prefs::LANGUAGES.contains(&("Українська", "uk")));
+        assert!(oracle_motion_engine::prefs::LANGUAGES.contains(&("Українська", "uk")));
         assert_eq!(code("uk"), "uk");
         assert_eq!(code("unknown"), "en");
     }
 
     #[test]
     fn es_translates_labels_computed_titles_and_keeps_names_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"es"})).unwrap();
         assert_eq!(language(&app), "es");
         assert!(spanish(&app));
@@ -7185,7 +7245,7 @@ mod tests {
 
     #[test]
     fn pt_br_translates_labels_computed_titles_and_keeps_names_verbatim() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         app.session.execute("prefs.set", json!({"key":"general.language", "value":"pt-br"})).unwrap();
         assert_eq!(language(&app), "pt-br");
         assert!(!japanese(&app));
@@ -7222,7 +7282,7 @@ mod tests {
 
     #[test]
     fn general_settings_exposes_the_language_automation_id() {
-        let mut app = EffectcraftApp::new(effectcraft_engine::Session::default());
+        let mut app = OracleMotionApp::new(oracle_motion_engine::Session::default());
         let ctx = egui::Context::default();
         let tokens = crate::theme::Tokens::for_kind(crate::theme::ThemeKind::Dark);
         crate::theme::install(&ctx, &tokens, language(&app));

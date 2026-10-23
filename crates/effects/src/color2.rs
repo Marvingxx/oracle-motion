@@ -2,10 +2,10 @@
 //! (Auto Levels / Contrast / Color, Equalize), Shadow/Highlight, Selective Color, Color Balance
 //! (HLS), Color Link, Broadcast Colors and the CC toners/offsets/kernel.
 
-use effectcraft_color::{BlendMode, blend_pixel, hsl_to_rgb, luminance, rgb_to_hsl};
-use effectcraft_keyframe::Value;
-use effectcraft_project::ParamUi;
-use effectcraft_raster::Image;
+use oracle_motion_color::{BlendMode, blend_pixel, hsl_to_rgb, luminance, rgb_to_hsl};
+use oracle_motion_keyframe::Value;
+use oracle_motion_project::ParamUi;
+use oracle_motion_raster::Image;
 use rayon::prelude::*;
 
 use crate::util::{Plane, gauss_plane, lerp3, premul, unpremul};

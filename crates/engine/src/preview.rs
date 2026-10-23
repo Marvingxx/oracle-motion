@@ -11,8 +11,8 @@
 //! Commands: `playback.settings.get {shortcut?}`, `playback.settings.set {shortcut?, values?,
 //! <field>: value…, current?}`.
 
-use effectcraft_project::Comp;
-use effectcraft_time::Tick;
+use oracle_motion_project::Comp;
+use oracle_motion_time::Tick;
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 

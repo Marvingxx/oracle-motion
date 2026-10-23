@@ -4,13 +4,13 @@
 
 use std::sync::Arc;
 
-use effectcraft_effects::{EffectEnv, EffectHost, LayerPixels};
-use effectcraft_keyframe::Value;
-use effectcraft_project::{BitDepth, Footage, ItemId};
-use effectcraft_raster::channels3d::{BACKGROUND_DEPTH, crypto_float, crypto_hash};
-use effectcraft_raster::{AuxChannels, Image};
-use effectcraft_render::{Backend, FootageSource, RenderOpts, Renderer};
-use effectcraft_time::Tick;
+use oracle_motion_effects::{EffectEnv, EffectHost, LayerPixels};
+use oracle_motion_keyframe::Value;
+use oracle_motion_project::{BitDepth, Footage, ItemId};
+use oracle_motion_raster::channels3d::{BACKGROUND_DEPTH, crypto_float, crypto_hash};
+use oracle_motion_raster::{AuxChannels, Image};
+use oracle_motion_render::{Backend, FootageSource, RenderOpts, Renderer};
+use oracle_motion_time::Tick;
 
 use crate::tests::{Pattern, Scene, c, check, diff, gpu, n, opts, pattern, set, tolerance};
 
@@ -103,10 +103,10 @@ pub(crate) fn aux_scene(w: u32, h: u32, scale: f64) -> AuxChannels {
 /// differ by more than 1e-3).
 pub(crate) fn direct(id: &str, vals: &[(&str, Value)], allow: f64) {
     let Some(g) = gpu() else { return };
-    let spec = effectcraft_effects::find(id).unwrap();
+    let spec = oracle_motion_effects::find(id).unwrap();
     let size = [70.0, 44.0];
     let mut params =
-        effectcraft_effects::Params { values: spec.params.iter().map(|ps| (ps.id.to_string(), effectcraft_effects::default_value(ps, size))).collect() };
+        oracle_motion_effects::Params { values: spec.params.iter().map(|ps| (ps.id.to_string(), oracle_motion_effects::default_value(ps, size))).collect() };
     for (k, v) in vals {
         params.values.insert(k.to_string(), v.clone());
     }
@@ -124,8 +124,8 @@ pub(crate) fn direct(id: &str, vals: &[(&str, Value)], allow: f64) {
                     }
                 }
             }
-            let buf = effectcraft_effects::Buf { img, offset, scale };
-            let ctx = || effectcraft_effects::EffectCtx {
+            let buf = oracle_motion_effects::Buf { img, offset, scale };
+            let ctx = || oracle_motion_effects::EffectCtx {
                 params: &params,
                 time: 0.25,
                 layer_size: size,
@@ -135,7 +135,7 @@ pub(crate) fn direct(id: &str, vals: &[(&str, Value)], allow: f64) {
             };
             let cpu = (spec.render)(&ctx(), buf.clone());
             let out =
-                effectcraft_render::Accelerator::effects(g, &[effectcraft_render::FxStep { spec, ctx: ctx() }], &buf, None).expect("the GPU runs the effect");
+                oracle_motion_render::Accelerator::effects(g, &[oracle_motion_render::FxStep { spec, ctx: ctx() }], &buf, None).expect("the GPU runs the effect");
             assert_eq!((out.offset, out.scale), (cpu.offset, cpu.scale), "{id}: geometry");
             let d = diff(&cpu.img, &out.img, 1e-3);
             assert!(

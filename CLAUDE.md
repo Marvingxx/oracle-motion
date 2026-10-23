@@ -1,6 +1,6 @@
-# EffectCraft — instructions for agents
+# Oracle Motion — instructions for agents
 
-EffectCraft is a clean-room, open-source, pure-Rust motion graphics and visual effects compositor targeting Adobe After Effects parity (and beyond). Native on macOS, Windows, Linux; web via WASM. Sibling of `../photocraft` (Photoshop), `../pdfcraft` (Acrobat), `../vectorcraft` (Illustrator), `../filmcraft` (Premiere), `../lightcraft` (Lightroom) and `../designcraft` (InDesign), with the same conventions.
+Oracle Motion is a clean-room, open-source, pure-Rust motion graphics and visual effects compositor targeting Adobe After Effects parity (and beyond). Native on macOS, Windows, Linux; web via WASM. Sibling of `../photocraft` (Photoshop), `../pdfcraft` (Acrobat), `../vectorcraft` (Illustrator), `../filmcraft` (Premiere), `../lightcraft` (Lightroom) and `../designcraft` (InDesign), with the same conventions.
 
 ## Start every session here
 `plan/` is maintainer-local (gitignored). Public equivalents: [`ROADMAP.md`](ROADMAP.md), [`docs/`](docs/).
@@ -15,16 +15,16 @@ EffectCraft is a clean-room, open-source, pure-Rust motion graphics and visual e
 - **Clean-room.** Behaviour and public docs only. No GPL/LGPL/AGPL code. ffmpeg only as an external test oracle.
 - **Pure Rust.** Media codecs come from FilmCraft crates (git deps behind `crates/media`, see `plan/adr/0001`).
 - **Layering** (`cargo xtask layers`): nothing below L5 depends on egui/eframe/winit/rfd/cpal; L0–L4 build for wasm32.
-- **Exact time:** `effectcraft_time::Tick` (254 016 000 000/s). Keyframe times are **layer time**.
+- **Exact time:** `oracle_motion_time::Tick` (254 016 000 000/s). Keyframe times are **layer time**.
 - **Property tree:** everything animatable is a `Property` in the layer's `PropGroup` tree, addressed by paths (`transform/position`, `effects/#1/blurriness`, `@uid`).
 - **Everything is a command** (`crates/engine`): id, label, menu path, shortcut, params, enabled(), run(). UI, CLI, control channel and MCP dispatch by id.
 - **Everything is agent-drivable:** every interactive widget registers an automation id; UI state is serde.
-- **Community links** (Help menu, About, header Discord button): https://discord.gg/artcraft, https://getartcraft.com, https://getartcraft.com/apps/effectcraft, https://github.com/storytold/effectcraft.
+- **Community links** (Help menu, About, header Discord button): https://discord.gg/artcraft, https://getartcraft.com, https://github.com/Marvingxx/oracle-motion, https://github.com/Marvingxx/oracle-motion.
 - **Quality gates** before every commit: `cargo xtask ci` (fmt, clippy -D warnings, tests, layers, assets, wasm).
 - **Commits:** one task id per commit (`M6.3: trim paths`). Only green states.
 
 ## Running and looking at the app
-- `cargo run -p effectcraft -- --control 9877` opens the desktop app with the JSON-lines control server (`docs/control-protocol.md`).
-- For UI work, **look at the result**. Headless (no window, works while the user is busy on the machine): `cargo run -p effectcraft-ui-egui --example snapshot -- --out ui.png --step '{"method":"engine.execute","params":{"command":"layer.select","params":{"layers":["#2"]}}}'` (steps are control-channel requests; `--script steps.jsonl`; `{"method":"snap","params":{"path":…}}` for intermediate shots). Or drive the live app via the control channel and take `ui.screenshot` (needs the window visible on screen).
+- `cargo run -p oracle-motion -- --control 9877` opens the desktop app with the JSON-lines control server (`docs/control-protocol.md`).
+- For UI work, **look at the result**. Headless (no window, works while the user is busy on the machine): `cargo run -p oracle-motion-ui-egui --example snapshot -- --out ui.png --step '{"method":"engine.execute","params":{"command":"layer.select","params":{"layers":["#2"]}}}'` (steps are control-channel requests; `--script steps.jsonl`; `{"method":"snap","params":{"path":…}}` for intermediate shots). Or drive the live app via the control channel and take `ui.screenshot` (needs the window visible on screen).
 - After Effects reference: drive AE via ExtendScript (`osascript -e 'tell application "Adobe After Effects 2026" to DoScriptFile "x.jsx"'`) and capture only AE's window (`screencapture -l <windowid>`); keep captures in `plan/aftereffects/ref/` (gitignored), never commit them, never capture the Home screen.
 - Parallel agents: separate git worktrees and `CARGO_TARGET_DIR=target/agent-<name>`; keep every `Cargo.toml` valid (the `crates/*` glob).

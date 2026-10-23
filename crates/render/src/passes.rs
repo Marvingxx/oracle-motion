@@ -12,9 +12,9 @@
 use std::future::Future;
 use std::task::{Context, Poll, Waker};
 
-use effectcraft_project::ItemId;
-use effectcraft_raster::Image;
-use effectcraft_time::Tick;
+use oracle_motion_project::ItemId;
+use oracle_motion_raster::Image;
+use oracle_motion_time::Tick;
 
 use crate::{Accelerator, AutoKey, Backend, Renderer};
 

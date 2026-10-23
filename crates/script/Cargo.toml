@@ -1,6 +1,6 @@
 [package]
-name = "effectcraft-script"
-description = "EffectCraft scripting: JavaScript (boa) with an After Effects-style object model (app, project, CompItem, Layer, Property…) over the engine's undoable commands"
+name = "oracle-motion-script"
+description = "Oracle Motion scripting: JavaScript (boa) with an After Effects-style object model (app, project, CompItem, Layer, Property…) over the engine's undoable commands"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -10,12 +10,12 @@ rust-version.workspace = true
 workspace = true
 
 [dependencies]
-effectcraft-engine = { workspace = true }
-effectcraft-project = { workspace = true }
-effectcraft-keyframe = { workspace = true }
-effectcraft-time = { workspace = true }
-effectcraft-render = { workspace = true }
-effectcraft-path = { workspace = true }
+oracle-motion-engine = { workspace = true }
+oracle-motion-project = { workspace = true }
+oracle-motion-keyframe = { workspace = true }
+oracle-motion-time = { workspace = true }
+oracle-motion-render = { workspace = true }
+oracle-motion-path = { workspace = true }
 serde_json = { workspace = true }
 boa_engine = { workspace = true }
 web-time = { workspace = true }
@@ -25,5 +25,5 @@ web-time = { workspace = true }
 boa_engine = { workspace = true, features = ["js"] }
 
 [dev-dependencies]
-effectcraft-expr = { workspace = true }
-effectcraft-psd = { workspace = true }
+oracle-motion-expr = { workspace = true }
+oracle-motion-psd = { workspace = true }

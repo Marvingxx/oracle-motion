@@ -16,7 +16,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 pub use craft_docpath::Refused;
-use effectcraft_project::{Footage, ItemId, ItemKind, Project};
+use oracle_motion_project::{Footage, ItemId, ItemKind, Project};
 
 /// Why a stored path is not followed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

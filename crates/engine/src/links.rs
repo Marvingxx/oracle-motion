@@ -1,27 +1,27 @@
-//! Community and project links (shown in Help ▸, the About dialog, the start screen and the
-//! header's Discord button).
+//! Project links (shown in Help ▸, the About dialog and the start screen). The community link opens
+//! Oracle Suite, the launcher of every Oracle app.
 
-pub const APP_NAME: &str = "EffectCraft";
-pub const APP_SLUG: &str = "effectcraft";
-pub const DISCORD: &str = "https://discord.gg/artcraft";
-pub const WEBSITE: &str = "https://getartcraft.com";
-pub const APP_PAGE: &str = "https://getartcraft.com/apps/effectcraft";
-pub const GITHUB: &str = "https://github.com/storytold/effectcraft";
-pub const ISSUES: &str = "https://github.com/storytold/effectcraft/issues";
+pub const APP_NAME: &str = "Oracle Motion";
+pub const APP_SLUG: &str = "oracle-motion";
+/// Oracle Suite: the launcher that installs and opens every Oracle app (Help ▸ Oracle Suite).
+pub const DISCORD: &str = "https://github.com/Marvingxx/oracle-suite";
+/// Oracle on GitHub: every Oracle app's source.
+pub const WEBSITE: &str = "https://github.com/Marvingxx";
+pub const APP_PAGE: &str = "https://github.com/Marvingxx/oracle-motion";
+pub const GITHUB: &str = "https://github.com/Marvingxx/oracle-motion";
+pub const ISSUES: &str = "https://github.com/Marvingxx/oracle-motion/issues";
 
-/// Sibling apps of the ArtCraft family: (name, what it is, GitHub repo, app page).
+/// The other Oracle apps: (name, GitHub repository).
 pub const SIBLINGS: &[(&str, &str)] = &[
-    ("PhotoCraft", "photocraft"),
-    ("VectorCraft", "vectorcraft"),
-    ("FilmCraft", "filmcraft"),
-    ("LightCraft", "lightcraft"),
-    ("PdfCraft", "pdfcraft"),
-    ("DesignCraft", "designcraft"),
+    ("Oracle Edit", "oracle-edit"),
+    ("Oracle Vector", "oracle-vector"),
+    ("Oracle Brand Guide", "oracle-guide"),
+    ("Oracle Brand Kit", "oracle-brand"),
 ];
 
 pub fn github_of(slug: &str) -> String {
-    format!("https://github.com/storytold/{slug}")
+    format!("https://github.com/Marvingxx/{slug}")
 }
 pub fn page_of(slug: &str) -> String {
-    format!("https://getartcraft.com/apps/{slug}")
+    format!("https://github.com/Marvingxx/{slug}")
 }

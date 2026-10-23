@@ -1,12 +1,12 @@
 //! Nested compositions: Preserve frame rate when nested or in render queue, Preserve resolution
 //! when nested.
 
-use effectcraft_color::Label;
-use effectcraft_keyframe::{Keyframe, Value};
-use effectcraft_project::build;
-use effectcraft_project::render_queue::RenderSettings;
-use effectcraft_project::{Comp, ItemId, ItemKind, LayerSource, Project, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::Label;
+use oracle_motion_keyframe::{Keyframe, Value};
+use oracle_motion_project::build;
+use oracle_motion_project::render_queue::RenderSettings;
+use oracle_motion_project::{Comp, ItemId, ItemKind, LayerSource, Project, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 
 use crate::render_frame;
 

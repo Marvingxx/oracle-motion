@@ -15,7 +15,7 @@
   timestamp server, ...). Optional overrides: WINDOWS_TIMESTAMP_URL, SIGNTOOL (path to signtool.exe).
 
 .EXAMPLE
-  pwsh packaging/windows/sign.ps1 dist/effectcraft.exe dist/Effectcraft.msi
+  pwsh packaging/windows/sign.ps1 dist/oracle-motion.exe dist/OracleMotion.msi
 #>
 param(
   [Parameter(Mandatory = $true, ValueFromRemainingArguments = $true)]
@@ -55,8 +55,8 @@ if (-not $haveCert -and -not $haveAzure) {
 }
 
 $script:SignTool = Find-SignTool
-$common = @('sign', '/v', '/fd', 'SHA256', '/td', 'SHA256', '/d', 'EffectCraft', '/du', 'https://github.com/storytold/effectcraft')
-$tmp = Join-Path ([IO.Path]::GetTempPath()) "effectcraft-sign-$PID"
+$common = @('sign', '/v', '/fd', 'SHA256', '/td', 'SHA256', '/d', 'Oracle Motion', '/du', 'https://github.com/Marvingxx/oracle-motion')
+$tmp = Join-Path ([IO.Path]::GetTempPath()) "oracle-motion-sign-$PID"
 New-Item -ItemType Directory -Force -Path $tmp | Out-Null
 
 try {

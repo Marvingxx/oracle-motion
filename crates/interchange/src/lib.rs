@@ -20,7 +20,7 @@
 //!   placeholders.
 //! - [`export`]: a composition → one sequence with one track per layer (bottom layer = V1),
 //!   footage clips with their timing, Motion and Opacity; precomps as nested sequences; solids as
-//!   colour mattes; layers only EffectCraft can draw (text, shapes, effects, masks, 3D…) are
+//!   colour mattes; layers only Oracle Motion can draw (text, shapes, effects, masks, 3D…) are
 //!   either left out or pre-rendered by the caller (ProRes 4444 with alpha, see
 //!   [`plan_prerender`]) and referenced as media.
 //!
@@ -166,22 +166,22 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 // ---------------------------------------------------------------- shared conversions
 
-pub(crate) fn rate_in(r: filmcraft_time::FrameRate) -> effectcraft_time::FrameRate {
-    if r.num <= 0 || r.den <= 0 { effectcraft_time::FrameRate::new(30, 1) } else { effectcraft_time::FrameRate::new(r.num, r.den) }
+pub(crate) fn rate_in(r: filmcraft_time::FrameRate) -> oracle_motion_time::FrameRate {
+    if r.num <= 0 || r.den <= 0 { oracle_motion_time::FrameRate::new(30, 1) } else { oracle_motion_time::FrameRate::new(r.num, r.den) }
 }
 
-pub(crate) fn rate_out(r: effectcraft_time::FrameRate) -> filmcraft_time::FrameRate {
+pub(crate) fn rate_out(r: oracle_motion_time::FrameRate) -> filmcraft_time::FrameRate {
     filmcraft_time::FrameRate { num: r.num, den: r.den }
 }
 
 // Both projects count time in the same ticks (254 016 000 000 per second).
-const _: () = assert!(filmcraft_time::TICKS_PER_SECOND == effectcraft_time::TICKS_PER_SECOND);
+const _: () = assert!(filmcraft_time::TICKS_PER_SECOND == oracle_motion_time::TICKS_PER_SECOND);
 
-pub(crate) fn tick_in(t: filmcraft_time::Tick) -> effectcraft_time::Tick {
-    effectcraft_time::Tick(t.0)
+pub(crate) fn tick_in(t: filmcraft_time::Tick) -> oracle_motion_time::Tick {
+    oracle_motion_time::Tick(t.0)
 }
 
-pub(crate) fn tick_out(t: effectcraft_time::Tick) -> filmcraft_time::Tick {
+pub(crate) fn tick_out(t: oracle_motion_time::Tick) -> filmcraft_time::Tick {
     filmcraft_time::Tick(t.0)
 }
 

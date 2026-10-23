@@ -3,11 +3,11 @@
 
 use std::collections::{BTreeMap, HashMap};
 
-use effectcraft_color::{BlendMode, Label};
-use effectcraft_keyframe::{Keyframe, Value};
-use effectcraft_project::build::Ids;
-use effectcraft_project::{AlphaMode, Comp, Footage, FootageKind, ItemId, ItemKind, Layer, LayerSource, Marker, Node, ParamUi, Project, Property, Solid};
-use effectcraft_time::{FrameRate, Tick};
+use oracle_motion_color::{BlendMode, Label};
+use oracle_motion_keyframe::{Keyframe, Value};
+use oracle_motion_project::build::Ids;
+use oracle_motion_project::{AlphaMode, Comp, Footage, FootageKind, ItemId, ItemKind, Layer, LayerSource, Marker, Node, ParamUi, Project, Property, Solid};
+use oracle_motion_time::{FrameRate, Tick};
 use filmcraft_media::{Generator, MediaKind};
 use filmcraft_project as fp;
 use serde::{Deserialize, Serialize};
@@ -402,7 +402,7 @@ impl Importer<'_> {
         if audio_track && !has_audio {
             return None;
         }
-        let mut l = effectcraft_project::build::layer(self.project, comp, &ti.name, source.clone(), size, None);
+        let mut l = oracle_motion_project::build::layer(self.project, comp, &ti.name, source.clone(), size, None);
         if is_adjustment {
             l.switches.adjustment = true;
         }
@@ -626,7 +626,7 @@ fn interp_in(k: Keyframe, i: fp::Interpolation) -> Keyframe {
         fp::Interpolation::Linear => k,
         fp::Interpolation::Hold => {
             let mut k = k;
-            k.out_interp = effectcraft_keyframe::Interp::Hold;
+            k.out_interp = oracle_motion_keyframe::Interp::Hold;
             k
         }
         _ => k.eased(),
