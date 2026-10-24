@@ -158,7 +158,7 @@ The most important missing piece: it turns every other estimate here into a meas
   inside a ligature, on the second line, right to left) and invert them; `render` covers the
   value a drag writes (less the Offset, whole units in Index). Not done: dragging Offset, bars on
   vertical text and on text on a path.
-- Regression evidence for the toolbar's gradient swatches (#612, reported on Discord): the
+- Regression evidence for the toolbar's gradient swatches (#612): the
   `ui_toolbar_gradient` input tests, checked headlessly on Windows, click a Linear Fill swatch and
   a Radial Stroke swatch on a selected shape layer and get the Gradient Editor on its Gradient Fill
   / Gradient Stroke Colors (OK saves); without such a gradient the swatch still opens the options,

@@ -1,5 +1,5 @@
 //! The Tools bar: home, the tool slots, tool options, snapping, workspaces and the community
-//! buttons (Discord is always one click away).
+//! buttons.
 
 use crate::i18n::{tr, tr_args};
 use egui::{Align2, Color32, Rect, Sense, Stroke, StrokeKind, pos2, vec2};

@@ -108,9 +108,6 @@ or into the Timeline, between layers and at the time you point to.
   layer, real-time pin recording, rotate/scale handles, pins driven by (or carrying) nulls for
   rigging, and follow-through for hair and cloth.
 
-<p align="center">
-  <img src="docs/images/oracle-motion-graph-editor.png" alt="The Graph Editor showing an eased value curve for a text animator's Range Start, with the graph editor's button bar for hold, linear, auto Bezier and Easy Ease" width="100%">
-</p>
 
 ## Effects
 
@@ -124,9 +121,6 @@ stylize (Glow, CC Glass…), **time** (Echo, Posterize Time, Timewarp, Time Disp
 controls. All nine **Layer Styles** (Drop Shadow, Inner/Outer Glow, Bevel and Emboss, Satin,
 overlays, Stroke) with Global Light. Preview plays audio in sync, with meters and waveforms.
 
-<p align="center">
-  <img src="docs/images/oracle-motion-effects.png" alt="A CC Particle World burst with Glow, and the Effect Controls panel listing the particle system's parameters" width="100%">
-</p>
 
 ## 3D
 
@@ -135,9 +129,6 @@ one- and two-node **cameras** with depth of field, **lights** (parallel, spot, p
 with soft ray-traced shadows, layers that intersect correctly, orbit, pan and dolly camera
 tools, and Front, Top, Left and Custom views.
 
-<p align="center">
-  <img src="docs/images/oracle-motion-3d.png" alt="The 3D Showcase demo in Custom View 1: intersecting cards lit by a spot light with soft shadows on a gridded floor, with the camera frustum and light drawn as wireframes" width="100%">
-</p>
 
 ## Export
 
@@ -155,9 +146,6 @@ solid, image, text and null layers, eased and spatial keyframes, masks, track ma
 modes, time remapping, optionally expressions) as `.json` or `.lottie`, and lists anything Lottie
 cannot express; File ▸ Import ▸ Lottie… opens one as a new composition.
 
-<p align="center">
-  <img src="docs/images/oracle-motion-render-queue.png" alt="The Render Queue panel with two compositions queued" width="100%">
-</p>
 
 ## Built for agents
 
@@ -325,20 +313,23 @@ Oracle Motion is part of **Oracle**, a personal creative suite, free and local:
 | **Oracle Brand Guide** | Brand guidelines and page layout | [oracle-guide](https://github.com/Marvingxx/oracle-guide) |
 | **Oracle Motion** | Motion graphics and compositing | [oracle-motion](https://github.com/Marvingxx/oracle-motion) |
 
-Oracle Motion started as a fork of [EffectCraft](https://github.com/storytold/effectcraft) by the ArtCraft
-team (MIT OR Apache-2.0), taken on 22 October 2026 and developed separately since. It is not
-affiliated with or endorsed by ArtCraft.
+
+## Sources
+
+Oracle Motion is built on [EffectCraft](https://github.com/storytold/effectcraft) by storytold (MIT OR
+Apache-2.0), taken on 23 October 2026 and developed separately since; its code, rewritten or not, keeps
+that licence and the original notices (`NOTICE`, `LICENSE-*`). Every other source (fonts, icons,
+libraries, images) is listed with its author and licence in the attribution file.
 
 ## License and credits
 
 Oracle Motion is dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
-Copyright (c) 2026 ArtCraft Team and the Oracle Motion contributors. Required notices are in [NOTICE](NOTICE).
+Required notices are in [NOTICE](NOTICE).
 
 Bundled fonts, icons, images and other assets keep their own open licenses; each one is listed
 with its author, source and license in [ATTRIBUTION.md](ATTRIBUTION.md).
 
 The Oracle name and logo in [`docs/brand/`](docs/brand/) are the project's brand marks and are not
-covered by this license (see [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt)). The
-ArtCraft marks of the original project have been removed, as its brand license asks of forks.
+covered by this license (see [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt)).
 
 

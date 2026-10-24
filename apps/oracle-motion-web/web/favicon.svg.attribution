@@ -1,6 +1,6 @@
 asset:        favicon.svg
 title:        Oracle Motion web app icon (favicon)
-author:       Oracle Motion contributors (drawing by the project owner in ArtCraft)
+author:       Oracle Motion contributors
 source:       original work
 license:      MIT OR Apache-2.0
 license-file: assets/app-icon/LICENSE.txt

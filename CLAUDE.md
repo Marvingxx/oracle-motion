@@ -19,7 +19,7 @@ Oracle Motion is a clean-room, open-source, pure-Rust motion graphics and visual
 - **Property tree:** everything animatable is a `Property` in the layer's `PropGroup` tree, addressed by paths (`transform/position`, `effects/#1/blurriness`, `@uid`).
 - **Everything is a command** (`crates/engine`): id, label, menu path, shortcut, params, enabled(), run(). UI, CLI, control channel and MCP dispatch by id.
 - **Everything is agent-drivable:** every interactive widget registers an automation id; UI state is serde.
-- **Community links** (Help menu, About, header Discord button): https://discord.gg/artcraft, https://getartcraft.com, https://github.com/Marvingxx/oracle-motion, https://github.com/Marvingxx/oracle-motion.
+- **Links** (Help menu, About): Oracle Suite (https://github.com/Marvingxx/oracle-suite), Oracle on GitHub (https://github.com/Marvingxx), the repository (https://github.com/Marvingxx/oracle-motion).
 - **Quality gates** before every commit: `cargo xtask ci` (fmt, clippy -D warnings, tests, layers, assets, wasm).
 - **Commits:** one task id per commit (`M6.3: trim paths`). Only green states.
 
